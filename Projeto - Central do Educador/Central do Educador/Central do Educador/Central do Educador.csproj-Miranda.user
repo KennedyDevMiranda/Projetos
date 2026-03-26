@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="Forms\FrmAgendamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmAlterBanco.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmAluno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmChatBot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmConfiguracaoEmail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmConfiguracaoWhatsApp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmControleTaxa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmTaxa.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmFinanceiro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmGerenciarFalhas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmNovidades.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmPainelConfigs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmPermissao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmDashBoard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmQRCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmRegistro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmReportarFalha.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmSobreNos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmTemplates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FrmEntregaLivros.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Forms\FrmFinanceiro.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>
