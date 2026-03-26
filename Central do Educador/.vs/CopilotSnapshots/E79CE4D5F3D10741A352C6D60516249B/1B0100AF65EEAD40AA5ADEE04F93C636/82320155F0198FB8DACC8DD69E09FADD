@@ -1,0 +1,281 @@
+﻿namespace Central_do_Educador
+{
+    partial class FrmEntregaLivros
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmEntregaLivros));
+            dgvEntregas = new DataGridView();
+            btnImportar = new Button();
+            cmbFiltroEntrega = new ComboBox();
+            cmbPesquisaAluno = new ComboBox();
+            panelCabecalho = new Panel();
+            btnConfirmarImportacao = new Button();
+            btnFiltros = new Button();
+            panelGrid = new Panel();
+            panelRodape = new Panel();
+            panelFiltros = new Panel();
+            radioButton1 = new RadioButton();
+            radioButton2 = new RadioButton();
+            radioButton3 = new RadioButton();
+            groupBox1 = new GroupBox();
+            groupBox2 = new GroupBox();
+            comboBox1 = new ComboBox();
+            groupBox3 = new GroupBox();
+            ((System.ComponentModel.ISupportInitialize)dgvEntregas).BeginInit();
+            panelCabecalho.SuspendLayout();
+            panelGrid.SuspendLayout();
+            panelFiltros.SuspendLayout();
+            groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
+            groupBox3.SuspendLayout();
+            SuspendLayout();
+            // 
+            // dgvEntregas
+            // 
+            dgvEntregas.BackgroundColor = SystemColors.Control;
+            dgvEntregas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvEntregas.Dock = DockStyle.Fill;
+            dgvEntregas.Location = new Point(0, 0);
+            dgvEntregas.Name = "dgvEntregas";
+            dgvEntregas.Size = new Size(876, 358);
+            dgvEntregas.TabIndex = 0;
+            // 
+            // btnImportar
+            // 
+            btnImportar.Location = new Point(833, 78);
+            btnImportar.Name = "btnImportar";
+            btnImportar.Size = new Size(75, 27);
+            btnImportar.TabIndex = 1;
+            btnImportar.Text = "Importar";
+            btnImportar.UseVisualStyleBackColor = true;
+            btnImportar.Click += btnImportar_Click;
+            // 
+            // cmbFiltroEntrega
+            // 
+            cmbFiltroEntrega.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbFiltroEntrega.FormattingEnabled = true;
+            cmbFiltroEntrega.Items.AddRange(new object[] { "Todos", "Sim", "Não" });
+            cmbFiltroEntrega.Location = new Point(12, 23);
+            cmbFiltroEntrega.Name = "cmbFiltroEntrega";
+            cmbFiltroEntrega.Size = new Size(107, 25);
+            cmbFiltroEntrega.TabIndex = 2;
+            // 
+            // cmbPesquisaAluno
+            // 
+            cmbPesquisaAluno.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmbPesquisaAluno.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cmbPesquisaAluno.FormattingEnabled = true;
+            cmbPesquisaAluno.Location = new Point(6, 21);
+            cmbPesquisaAluno.Name = "cmbPesquisaAluno";
+            cmbPesquisaAluno.Size = new Size(216, 25);
+            cmbPesquisaAluno.TabIndex = 3;
+            // 
+            // panelCabecalho
+            // 
+            panelCabecalho.Controls.Add(groupBox3);
+            panelCabecalho.Controls.Add(groupBox2);
+            panelCabecalho.Controls.Add(groupBox1);
+            panelCabecalho.Controls.Add(btnConfirmarImportacao);
+            panelCabecalho.Controls.Add(btnFiltros);
+            panelCabecalho.Controls.Add(btnImportar);
+            panelCabecalho.Dock = DockStyle.Top;
+            panelCabecalho.Location = new Point(0, 0);
+            panelCabecalho.Name = "panelCabecalho";
+            panelCabecalho.Size = new Size(1001, 117);
+            panelCabecalho.TabIndex = 4;
+            // 
+            // btnConfirmarImportacao
+            // 
+            btnConfirmarImportacao.Location = new Point(914, 78);
+            btnConfirmarImportacao.Name = "btnConfirmarImportacao";
+            btnConfirmarImportacao.Size = new Size(75, 27);
+            btnConfirmarImportacao.TabIndex = 5;
+            btnConfirmarImportacao.Text = "Salvar";
+            btnConfirmarImportacao.UseVisualStyleBackColor = true;
+            btnConfirmarImportacao.Click += btnConfirmarImportacao_Click;
+            // 
+            // btnFiltros
+            // 
+            btnFiltros.Location = new Point(12, 78);
+            btnFiltros.Name = "btnFiltros";
+            btnFiltros.Size = new Size(75, 27);
+            btnFiltros.TabIndex = 4;
+            btnFiltros.Text = "Ocultar";
+            btnFiltros.UseVisualStyleBackColor = true;
+            btnFiltros.Click += btnFiltros_Click;
+            // 
+            // panelGrid
+            // 
+            panelGrid.Controls.Add(dgvEntregas);
+            panelGrid.Dock = DockStyle.Fill;
+            panelGrid.Location = new Point(125, 117);
+            panelGrid.Name = "panelGrid";
+            panelGrid.Size = new Size(876, 358);
+            panelGrid.TabIndex = 4;
+            // 
+            // panelRodape
+            // 
+            panelRodape.Dock = DockStyle.Bottom;
+            panelRodape.Location = new Point(0, 475);
+            panelRodape.Name = "panelRodape";
+            panelRodape.Size = new Size(1001, 36);
+            panelRodape.TabIndex = 5;
+            // 
+            // panelFiltros
+            // 
+            panelFiltros.Controls.Add(cmbFiltroEntrega);
+            panelFiltros.Dock = DockStyle.Left;
+            panelFiltros.Location = new Point(0, 117);
+            panelFiltros.Name = "panelFiltros";
+            panelFiltros.Size = new Size(125, 358);
+            panelFiltros.TabIndex = 6;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(6, 21);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(60, 21);
+            radioButton1.TabIndex = 8;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Todos";
+            radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(72, 21);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(47, 21);
+            radioButton2.TabIndex = 9;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "Sim";
+            radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3
+            // 
+            radioButton3.AutoSize = true;
+            radioButton3.Location = new Point(125, 21);
+            radioButton3.Name = "radioButton3";
+            radioButton3.Size = new Size(51, 21);
+            radioButton3.TabIndex = 10;
+            radioButton3.TabStop = true;
+            radioButton3.Text = "Não";
+            radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(cmbPesquisaAluno);
+            groupBox1.Location = new Point(12, 12);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(231, 60);
+            groupBox1.TabIndex = 11;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Aluno";
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(radioButton1);
+            groupBox2.Controls.Add(radioButton2);
+            groupBox2.Controls.Add(radioButton3);
+            groupBox2.Location = new Point(249, 12);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(184, 60);
+            groupBox2.TabIndex = 12;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Livro Entregue";
+            // 
+            // comboBox1
+            // 
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(6, 21);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(121, 25);
+            comboBox1.TabIndex = 13;
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(comboBox1);
+            groupBox3.Location = new Point(439, 12);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(200, 60);
+            groupBox3.TabIndex = 14;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "Dia da Semana";
+            // 
+            // FrmEntregaLivros
+            // 
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1001, 511);
+            Controls.Add(panelGrid);
+            Controls.Add(panelFiltros);
+            Controls.Add(panelCabecalho);
+            Controls.Add(panelRodape);
+            Font = new Font("Century Gothic", 9F);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "FrmEntregaLivros";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Entrega de Livros";
+            Load += EntregaLivros_Load;
+            ((System.ComponentModel.ISupportInitialize)dgvEntregas).EndInit();
+            panelCabecalho.ResumeLayout(false);
+            panelGrid.ResumeLayout(false);
+            panelFiltros.ResumeLayout(false);
+            groupBox1.ResumeLayout(false);
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            ResumeLayout(false);
+        }
+
+        #endregion
+
+        private DataGridView dgvEntregas;
+        private Button btnImportar;
+        private ComboBox cmbFiltroEntrega;
+        private ComboBox cmbPesquisaAluno;
+        private Panel panelCabecalho;
+        private Panel panelGrid;
+        private Panel panelRodape;
+        private Panel panelFiltros;
+        private Button btnFiltros;
+        private Button btnConfirmarImportacao;
+        private RadioButton radioButton1;
+        private RadioButton radioButton3;
+        private RadioButton radioButton2;
+        private GroupBox groupBox1;
+        private GroupBox groupBox2;
+        private GroupBox groupBox3;
+        private ComboBox comboBox1;
+    }
+
+}

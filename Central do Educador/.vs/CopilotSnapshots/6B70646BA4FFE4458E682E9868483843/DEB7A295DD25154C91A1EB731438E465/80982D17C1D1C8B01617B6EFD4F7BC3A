@@ -1,0 +1,675 @@
+﻿using Central_do_Educador.Data;
+using Central_do_Educador.Services;
+using Microsoft.Data.Sqlite;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Central_do_Educador.Forms
+{
+    public partial class FrmFinanceiro : Form
+    {
+        private readonly CultureInfo _ptBR = new("pt-BR");
+        private long _contratoIdFiltro; // filtro de parcelas por contrato
+
+        public FrmFinanceiro()
+        {
+            InitializeComponent();
+        }
+
+        // ══════════════════════════════════════════════
+        //  LOAD
+        // ══════════════════════════════════════════════
+
+        private async void FrmFinanceiro_Load(object sender, EventArgs e)
+        {
+            FormatarGrid(dgvContratos);
+            FormatarGrid(dgvParcelas);
+            dgvParcelas.CellFormatting += dgvParcelas_CellFormatting;
+
+            await FinanceiroService.AtualizarParcelasVencidasAsync();
+            await CarregarDashboardAsync();
+            await CarregarContratosAsync();
+            await CarregarConfigAsync();
+        }
+
+        private async void tabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl.SelectedTab == tabContratos)
+                await CarregarContratosAsync();
+            else if (tabControl.SelectedTab == tabParcelas)
+                await CarregarParcelasAsync();
+        }
+
+        // ══════════════════════════════════════════════
+        //  DASHBOARD
+        // ══════════════════════════════════════════════
+
+        private async Task CarregarDashboardAsync()
+        {
+            try
+            {
+                var r = await FinanceiroService.ObterResumoAsync();
+                lblCard1Value.Text = r.ContratosAtivos.ToString();
+                lblCard2Value.Text = r.TotalRecebido.ToString("C2", _ptBR);
+                lblCard3Value.Text = r.TotalPendente.ToString("C2", _ptBR);
+                lblCard4Value.Text = r.TotalVencido.ToString("C2", _ptBR);
+                lblCard5Value.Text = r.ParcelasAVencer.ToString();
+            }
+            catch (Exception ex)
+            {
+                lblStatusBar.Text = $"Erro ao carregar resumo: {ex.Message}";
+            }
+        }
+
+        // ══════════════════════════════════════════════
+        //  CONTRATOS
+        // ══════════════════════════════════════════════
+
+        private async Task CarregarContratosAsync()
+        {
+            try
+            {
+                string? status = cmbStatusContrato.SelectedItem?.ToString();
+                if (status == "Todos") status = null;
+
+                var lista = await FinanceiroService.ListarContratosAsync(status);
+
+                string pesquisa = txtPesquisaContrato.Text.Trim();
+                if (!string.IsNullOrEmpty(pesquisa))
+                    lista = lista.Where(c =>
+                        c.NomeAluno.Contains(pesquisa, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                var dt = new DataTable();
+                dt.Columns.Add("Id", typeof(long));
+                dt.Columns.Add("Aluno");
+                dt.Columns.Add("Descrição");
+                dt.Columns.Add("Valor Total");
+                dt.Columns.Add("Parcelas", typeof(int));
+                dt.Columns.Add("Dia Venc.", typeof(int));
+                dt.Columns.Add("Status");
+                dt.Columns.Add("Início");
+
+                foreach (var c in lista)
+                {
+                    string inicio = DateTime.TryParse(c.DataInicio, CultureInfo.InvariantCulture,
+                        DateTimeStyles.None, out var di) ? di.ToString("dd/MM/yyyy") : c.DataInicio;
+
+                    dt.Rows.Add(c.Id, c.NomeAluno, c.Descricao,
+                        c.ValorTotal.ToString("N2", _ptBR),
+                        c.QuantidadeParcelas, c.DiaVencimento, c.Status, inicio);
+                }
+
+                dgvContratos.DataSource = dt;
+                if (dgvContratos.Columns.Contains("Id"))
+                    dgvContratos.Columns["Id"]!.Visible = false;
+
+                lblTotalRegistros.Text = $"Contratos: {dt.Rows.Count}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao carregar contratos: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void btnNovoContrato_Click(object sender, EventArgs e)
+        {
+            using var dlg = CriarDialogoContrato();
+            if (dlg.ShowDialog(this) != DialogResult.OK) return;
+
+            try
+            {
+                var contrato = (FinanceiroService.Contrato)dlg.Tag!;
+                await FinanceiroService.InserirContratoAsync(contrato);
+                lblStatusBar.Text = "Contrato criado com sucesso!";
+                await CarregarContratosAsync();
+                await CarregarDashboardAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao criar contrato: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void btnExcluirContrato_Click(object sender, EventArgs e)
+        {
+            long id = ObterIdSelecionado(dgvContratos);
+            if (id <= 0) { MessageBox.Show("Selecione um contrato."); return; }
+
+            if (MessageBox.Show("Excluir este contrato e todas as suas parcelas?",
+                "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                return;
+
+            try
+            {
+                await FinanceiroService.ExcluirContratoAsync(id);
+                lblStatusBar.Text = "Contrato excluído.";
+                await CarregarContratosAsync();
+                await CarregarDashboardAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void btnVerParcelas_Click(object sender, EventArgs e)
+        {
+            long id = ObterIdSelecionado(dgvContratos);
+            if (id <= 0) { MessageBox.Show("Selecione um contrato."); return; }
+
+            _contratoIdFiltro = id;
+            tabControl.SelectedTab = tabParcelas;
+            await CarregarParcelasAsync();
+        }
+
+        private async void cmbFiltroContrato_Changed(object? sender, EventArgs e)
+            => await CarregarContratosAsync();
+
+        // ══════════════════════════════════════════════
+        //  PARCELAS
+        // ══════════════════════════════════════════════
+
+        private async Task CarregarParcelasAsync()
+        {
+            try
+            {
+                string? status = cmbStatusParcela.SelectedItem?.ToString();
+                if (status == "Todos") status = null;
+
+                long? contratoId = _contratoIdFiltro > 0 ? _contratoIdFiltro : null;
+                var lista = await FinanceiroService.ListarParcelasAsync(contratoId, filtroStatus: status);
+
+                string pesquisa = txtPesquisaParcela.Text.Trim();
+                if (!string.IsNullOrEmpty(pesquisa))
+                    lista = lista.Where(p =>
+                        p.NomeAluno.Contains(pesquisa, StringComparison.OrdinalIgnoreCase)).ToList();
+
+                var dt = new DataTable();
+                dt.Columns.Add("Id", typeof(long));
+                dt.Columns.Add("Aluno");
+                dt.Columns.Add("Parcela");
+                dt.Columns.Add("Valor");
+                dt.Columns.Add("Vencimento");
+                dt.Columns.Add("Status");
+                dt.Columns.Add("Pagamento");
+                dt.Columns.Add("Valor Pago");
+                dt.Columns.Add("Forma Pgto");
+                dt.Columns.Add("Contrato");
+
+                foreach (var p in lista)
+                {
+                    string venc = DateTime.TryParse(p.DataVencimento, CultureInfo.InvariantCulture,
+                        DateTimeStyles.None, out var dv) ? dv.ToString("dd/MM/yyyy") : p.DataVencimento;
+                    string? pgto = DateTime.TryParse(p.DataPagamento, CultureInfo.InvariantCulture,
+                        DateTimeStyles.None, out var dp) ? dp.ToString("dd/MM/yyyy") : p.DataPagamento;
+
+                    dt.Rows.Add(p.Id, p.NomeAluno,
+                        $"{p.NumeroParcela}/{p.TotalParcelas}",
+                        p.ValorParcela.ToString("N2", _ptBR), venc, p.Status,
+                        pgto ?? "—",
+                        p.ValorPago?.ToString("N2", _ptBR) ?? "—",
+                        p.FormaPagamento ?? "—",
+                        p.DescricaoContrato ?? "");
+                }
+
+                dgvParcelas.DataSource = dt;
+                if (dgvParcelas.Columns.Contains("Id"))
+                    dgvParcelas.Columns["Id"]!.Visible = false;
+
+                lblTotalRegistros.Text = $"Parcelas: {dt.Rows.Count}";
+                _contratoIdFiltro = 0; // limpar filtro pontual
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao carregar parcelas: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void btnRegistrarPgto_Click(object sender, EventArgs e)
+        {
+            long id = ObterIdSelecionado(dgvParcelas);
+            if (id <= 0) { MessageBox.Show("Selecione uma parcela."); return; }
+
+            var row = dgvParcelas.SelectedRows[0];
+            string statusAtual = row.Cells["Status"].Value?.ToString() ?? "";
+            if (statusAtual == "PAGA")
+            {
+                MessageBox.Show("Esta parcela já está paga."); return;
+            }
+
+            string valorStr = row.Cells["Valor"].Value?.ToString() ?? "0";
+
+            using var dlg = CriarDialogoPagamento(valorStr);
+            if (dlg.ShowDialog(this) != DialogResult.OK) return;
+
+            try
+            {
+                var dados = ((decimal valor, string forma, string? obs))dlg.Tag!;
+                await FinanceiroService.RegistrarPagamentoAsync(id, dados.valor, dados.forma, dados.obs);
+                await NotificacaoFinanceiraService.GerarConfirmacaoPagamentoAsync(id);
+                lblStatusBar.Text = "Pagamento registrado!";
+                await CarregarParcelasAsync();
+                await CarregarDashboardAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void btnEstornar_Click(object sender, EventArgs e)
+        {
+            long id = ObterIdSelecionado(dgvParcelas);
+            if (id <= 0) { MessageBox.Show("Selecione uma parcela."); return; }
+
+            var row = dgvParcelas.SelectedRows[0];
+            if (row.Cells["Status"].Value?.ToString() != "PAGA")
+            {
+                MessageBox.Show("Só é possível estornar parcelas pagas."); return;
+            }
+
+            if (MessageBox.Show("Estornar o pagamento desta parcela?",
+                "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                return;
+
+            try
+            {
+                await FinanceiroService.EstornarPagamentoAsync(id);
+                lblStatusBar.Text = "Pagamento estornado.";
+                await CarregarParcelasAsync();
+                await CarregarDashboardAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void btnConfirmacaoPgto_Click(object sender, EventArgs e)
+        {
+            long id = ObterIdSelecionado(dgvParcelas);
+            if (id <= 0) { MessageBox.Show("Selecione uma parcela paga."); return; }
+
+            try
+            {
+                int geradas = await NotificacaoFinanceiraService.GerarConfirmacaoPagamentoAsync(id);
+                lblStatusBar.Text = geradas > 0
+                    ? $"{geradas} notificação(ões) de confirmação gerada(s)."
+                    : "Nenhuma notificação gerada (verifique templates/contatos).";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void btnProcessarNotif_Click(object sender, EventArgs e)
+        {
+            btnProcessarNotif.Enabled = false;
+            lblStatusBar.Text = "Processando notificações financeiras...";
+            try
+            {
+                var r = await NotificacaoFinanceiraService.ProcessarAsync();
+                lblStatusBar.Text = $"Lembretes: {r.LembretesGerados} | Cobranças: {r.CobrancasGeradas} | " +
+                                    $"E-mails: {r.EmailsEnviados} ✓ {r.EmailsFalhas} ✗ | " +
+                                    $"WhatsApp: {r.WhatsAppEnviados} ✓ {r.WhatsAppFalhas} ✗";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                btnProcessarNotif.Enabled = true;
+            }
+        }
+
+        private async void cmbFiltroParcela_Changed(object? sender, EventArgs e)
+            => await CarregarParcelasAsync();
+
+        // ══════════════════════════════════════════════
+        //  CONFIGURAÇÕES
+        // ══════════════════════════════════════════════
+
+        private async Task CarregarConfigAsync()
+        {
+            try
+            {
+                var cfg = await FinanceiroService.ObterConfigAsync();
+                nudDiasLembrete.Value = cfg.DiasAntecedenciaLembrete;
+                nudDiasCobranca.Value = cfg.DiasAtrasoCobranca;
+                chkEnviarEmail.Checked = cfg.EnviarEmail;
+                chkEnviarWhatsapp.Checked = cfg.EnviarWhatsapp;
+                txtHorarioEnvio.Text = cfg.HorarioEnvio;
+                chkFinanceiroAtivo.Checked = cfg.Ativo;
+            }
+            catch (Exception ex)
+            {
+                lblStatusBar.Text = $"Erro ao carregar config: {ex.Message}";
+            }
+        }
+
+        private async void btnSalvarConfig_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var cfg = new FinanceiroService.ConfiguracaoFinanceiro
+                {
+                    DiasAntecedenciaLembrete = (int)nudDiasLembrete.Value,
+                    DiasAtrasoCobranca = (int)nudDiasCobranca.Value,
+                    EnviarEmail = chkEnviarEmail.Checked,
+                    EnviarWhatsapp = chkEnviarWhatsapp.Checked,
+                    HorarioEnvio = txtHorarioEnvio.Text.Trim(),
+                    Ativo = chkFinanceiroAtivo.Checked,
+                };
+                await FinanceiroService.SalvarConfigAsync(cfg);
+                MessageBox.Show("Configuração salva!", "Sucesso",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void btnExecutarNotif_Click(object sender, EventArgs e)
+        {
+            btnExecutarNotif.Enabled = false;
+            txtResultado.Clear();
+            txtResultado.AppendText($"[{DateTime.Now:HH:mm:ss}] Iniciando processamento...\r\n");
+
+            try
+            {
+                var r = await NotificacaoFinanceiraService.ProcessarAsync();
+                txtResultado.AppendText($"[{DateTime.Now:HH:mm:ss}] Concluído!\r\n");
+                txtResultado.AppendText($"  📋 Lembretes gerados: {r.LembretesGerados}\r\n");
+                txtResultado.AppendText($"  ⚠️ Cobranças geradas: {r.CobrancasGeradas}\r\n");
+                txtResultado.AppendText($"  📧 E-mails: {r.EmailsEnviados} enviados, {r.EmailsFalhas} falhas\r\n");
+                txtResultado.AppendText($"  📱 WhatsApp: {r.WhatsAppEnviados} enviados, {r.WhatsAppFalhas} falhas");
+                if (r.WhatsAppLinks > 0)
+                    txtResultado.AppendText($", {r.WhatsAppLinks} links abertos");
+                txtResultado.AppendText("\r\n");
+
+                foreach (var erro in r.Erros)
+                    txtResultado.AppendText($"  ❌ {erro}\r\n");
+
+                await CarregarDashboardAsync();
+            }
+            catch (Exception ex)
+            {
+                txtResultado.AppendText($"  ❌ Erro: {ex.Message}\r\n");
+            }
+            finally
+            {
+                btnExecutarNotif.Enabled = true;
+            }
+        }
+
+        // ══════════════════════════════════════════════
+        //  FORMATAÇÃO DOS GRIDS
+        // ══════════════════════════════════════════════
+
+        private static void FormatarGrid(DataGridView g)
+        {
+            g.AllowUserToAddRows = false;
+            g.AllowUserToDeleteRows = false;
+            g.AllowUserToResizeRows = false;
+            g.ReadOnly = true;
+            g.MultiSelect = false;
+            g.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            g.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            g.RowHeadersVisible = false;
+            g.EnableHeadersVisualStyles = false;
+            g.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            g.ColumnHeadersHeight = 32;
+            g.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+            g.DefaultCellStyle.Font = new Font("Century Gothic", 10F);
+            g.ColumnHeadersDefaultCellStyle.Font = new Font("Century Gothic", 9F, FontStyle.Bold);
+            g.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(60, 60, 60);
+            g.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+        }
+
+        private void dgvParcelas_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvParcelas.Columns[e.ColumnIndex].Name != "Status" || e.Value == null) return;
+
+            string status = e.Value.ToString() ?? "";
+            var row = dgvParcelas.Rows[e.RowIndex];
+
+            switch (status)
+            {
+                case "PAGA":
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(232, 245, 233);
+                    e.CellStyle!.ForeColor = Color.FromArgb(27, 94, 32);
+                    e.CellStyle.Font = new Font("Century Gothic", 10F, FontStyle.Bold);
+                    break;
+                case "VENCIDA":
+                    row.DefaultCellStyle.BackColor = Color.FromArgb(255, 235, 238);
+                    e.CellStyle!.ForeColor = Color.FromArgb(183, 28, 28);
+                    e.CellStyle.Font = new Font("Century Gothic", 10F, FontStyle.Bold);
+                    break;
+                case "PENDENTE":
+                    e.CellStyle!.ForeColor = Color.FromArgb(230, 126, 0);
+                    break;
+            }
+        }
+
+        // ══════════════════════════════════════════════
+        //  DIÁLOGO — NOVO CONTRATO
+        // ══════════════════════════════════════════════
+
+        private Form CriarDialogoContrato()
+        {
+            var frm = new Form
+            {
+                Text = "Novo Contrato",
+                Size = new Size(460, 420),
+                StartPosition = FormStartPosition.CenterParent,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                MaximizeBox = false, MinimizeBox = false,
+                Font = new Font("Century Gothic", 9F),
+            };
+
+            int y = 16;
+            const int lblX = 16, ctrlX = 180, ctrlW = 240;
+
+            var lblAluno = new Label { Text = "Aluno:", Location = new Point(lblX, y + 4), AutoSize = true };
+            var cmbAluno = new ComboBox
+            {
+                Location = new Point(ctrlX, y), Size = new Size(ctrlW, 25),
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+            CarregarAlunosCombo(cmbAluno);
+            frm.Controls.Add(lblAluno); frm.Controls.Add(cmbAluno);
+
+            y += 36;
+            var lblDesc = new Label { Text = "Descrição:", Location = new Point(lblX, y + 4), AutoSize = true };
+            var txtDesc = new TextBox { Location = new Point(ctrlX, y), Size = new Size(ctrlW, 25) };
+            frm.Controls.Add(lblDesc); frm.Controls.Add(txtDesc);
+
+            y += 36;
+            var lblValor = new Label { Text = "Valor Total (R$):", Location = new Point(lblX, y + 4), AutoSize = true };
+            var txtValor = new TextBox { Location = new Point(ctrlX, y), Size = new Size(ctrlW, 25), Text = "0,00" };
+            frm.Controls.Add(lblValor); frm.Controls.Add(txtValor);
+
+            y += 36;
+            var lblQtd = new Label { Text = "Qtd. Parcelas:", Location = new Point(lblX, y + 4), AutoSize = true };
+            var nudQtd = new NumericUpDown
+            {
+                Location = new Point(ctrlX, y), Size = new Size(80, 25),
+                Minimum = 1, Maximum = 120, Value = 1
+            };
+            frm.Controls.Add(lblQtd); frm.Controls.Add(nudQtd);
+
+            y += 36;
+            var lblDia = new Label { Text = "Dia Vencimento:", Location = new Point(lblX, y + 4), AutoSize = true };
+            var nudDia = new NumericUpDown
+            {
+                Location = new Point(ctrlX, y), Size = new Size(80, 25),
+                Minimum = 1, Maximum = 31, Value = 10
+            };
+            frm.Controls.Add(lblDia); frm.Controls.Add(nudDia);
+
+            y += 36;
+            var lblInicio = new Label { Text = "Data Início:", Location = new Point(lblX, y + 4), AutoSize = true };
+            var dtpInicio = new DateTimePicker
+            {
+                Location = new Point(ctrlX, y), Size = new Size(ctrlW, 25),
+                Format = DateTimePickerFormat.Short
+            };
+            frm.Controls.Add(lblInicio); frm.Controls.Add(dtpInicio);
+
+            y += 36;
+            var lblObs = new Label { Text = "Observação:", Location = new Point(lblX, y + 4), AutoSize = true };
+            var txtObs = new TextBox
+            {
+                Location = new Point(ctrlX, y), Size = new Size(ctrlW, 50),
+                Multiline = true
+            };
+            frm.Controls.Add(lblObs); frm.Controls.Add(txtObs);
+
+            y += 64;
+            var btnOk = new Button { Text = "Salvar", DialogResult = DialogResult.OK, Location = new Point(ctrlX, y), Size = new Size(100, 32) };
+            var btnCancel = new Button { Text = "Cancelar", DialogResult = DialogResult.Cancel, Location = new Point(ctrlX + 110, y), Size = new Size(100, 32) };
+            frm.Controls.Add(btnOk); frm.Controls.Add(btnCancel);
+            frm.AcceptButton = btnOk; frm.CancelButton = btnCancel;
+
+            btnOk.Click += (s, e) =>
+            {
+                if (cmbAluno.SelectedValue == null) { MessageBox.Show("Selecione um aluno."); frm.DialogResult = DialogResult.None; return; }
+                if (string.IsNullOrWhiteSpace(txtDesc.Text)) { MessageBox.Show("Informe a descrição."); frm.DialogResult = DialogResult.None; return; }
+                if (!decimal.TryParse(txtValor.Text, NumberStyles.Any, _ptBR, out decimal valor) || valor <= 0)
+                { MessageBox.Show("Valor inválido."); frm.DialogResult = DialogResult.None; return; }
+
+                frm.Tag = new FinanceiroService.Contrato
+                {
+                    AlunoId = (long)cmbAluno.SelectedValue,
+                    Descricao = txtDesc.Text.Trim(),
+                    ValorTotal = valor,
+                    QuantidadeParcelas = (int)nudQtd.Value,
+                    DiaVencimento = (int)nudDia.Value,
+                    DataInicio = dtpInicio.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
+                    Observacao = txtObs.Text.Trim(),
+                };
+            };
+
+            return frm;
+        }
+
+        // ══════════════════════════════════════════════
+        //  DIÁLOGO — REGISTRAR PAGAMENTO
+        // ══════════════════════════════════════════════
+
+        private Form CriarDialogoPagamento(string valorSugerido)
+        {
+            var frm = new Form
+            {
+                Text = "Registrar Pagamento",
+                Size = new Size(400, 280),
+                StartPosition = FormStartPosition.CenterParent,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                MaximizeBox = false, MinimizeBox = false,
+                Font = new Font("Century Gothic", 9F),
+            };
+
+            int y = 16;
+            const int lblX = 16, ctrlX = 160, ctrlW = 190;
+
+            var lblValor = new Label { Text = "Valor Pago (R$):", Location = new Point(lblX, y + 4), AutoSize = true };
+            var txtValor = new TextBox { Location = new Point(ctrlX, y), Size = new Size(ctrlW, 25), Text = valorSugerido };
+            frm.Controls.Add(lblValor); frm.Controls.Add(txtValor);
+
+            y += 36;
+            var lblForma = new Label { Text = "Forma de Pgto:", Location = new Point(lblX, y + 4), AutoSize = true };
+            var cmbForma = new ComboBox
+            {
+                Location = new Point(ctrlX, y), Size = new Size(ctrlW, 25),
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+            cmbForma.Items.AddRange(["PIX", "Dinheiro", "Cartão Crédito", "Cartão Débito", "Boleto", "Transferência"]);
+            cmbForma.SelectedIndex = 0;
+            frm.Controls.Add(lblForma); frm.Controls.Add(cmbForma);
+
+            y += 36;
+            var lblObs = new Label { Text = "Observação:", Location = new Point(lblX, y + 4), AutoSize = true };
+            var txtObs = new TextBox { Location = new Point(ctrlX, y), Size = new Size(ctrlW, 50), Multiline = true };
+            frm.Controls.Add(lblObs); frm.Controls.Add(txtObs);
+
+            y += 70;
+            var btnOk = new Button { Text = "Confirmar", DialogResult = DialogResult.OK, Location = new Point(ctrlX, y), Size = new Size(90, 32) };
+            var btnCancel = new Button { Text = "Cancelar", DialogResult = DialogResult.Cancel, Location = new Point(ctrlX + 100, y), Size = new Size(90, 32) };
+            frm.Controls.Add(btnOk); frm.Controls.Add(btnCancel);
+            frm.AcceptButton = btnOk; frm.CancelButton = btnCancel;
+
+            btnOk.Click += (s, e) =>
+            {
+                if (!decimal.TryParse(txtValor.Text, NumberStyles.Any, _ptBR, out decimal valor) || valor <= 0)
+                { MessageBox.Show("Valor inválido."); frm.DialogResult = DialogResult.None; return; }
+
+                frm.Tag = (valor, cmbForma.SelectedItem!.ToString()!, txtObs.Text.Trim().Length > 0 ? txtObs.Text.Trim() : (string?)null);
+            };
+
+            return frm;
+        }
+
+        // ══════════════════════════════════════════════
+        //  HELPERS
+        // ══════════════════════════════════════════════
+
+        private static long ObterIdSelecionado(DataGridView dgv)
+        {
+            if (dgv.SelectedRows.Count == 0 || !dgv.Columns.Contains("Id")) return 0;
+            var val = dgv.SelectedRows[0].Cells["Id"].Value;
+            return val is long l ? l : 0;
+        }
+
+        private static void CarregarAlunosCombo(ComboBox cmb)
+        {
+            try
+            {
+                using var conn = new SqliteConnection(Db.ConnectionString);
+                conn.Open();
+                using var cmd = new SqliteCommand(
+                    "SELECT id, nome FROM alunos WHERE ativo = 1 ORDER BY nome;", conn);
+                using var reader = cmd.ExecuteReader();
+
+                var dt = new DataTable();
+                dt.Columns.Add("id", typeof(long));
+                dt.Columns.Add("nome", typeof(string));
+
+                while (reader.Read())
+                    dt.Rows.Add(reader.GetInt64(0), reader.GetString(1));
+
+                cmb.DataSource = dt;
+                cmb.DisplayMember = "nome";
+                cmb.ValueMember = "id";
+            }
+            catch { /* combo vazia se falhar */ }
+        }
+
+        private async void btnAtualizarContratos_Click(object? sender, EventArgs e)
+        {
+            await CarregarContratosAsync();
+        }
+
+        private async void btnAtualizarParcelas_Click(object? sender, EventArgs e)
+        {
+            await CarregarParcelasAsync();
+        }
+    }
+}

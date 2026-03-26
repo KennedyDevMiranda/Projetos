@@ -1,0 +1,590 @@
+﻿using Central_do_Educador.Forms;
+using Central_do_Educador.Models;
+using Central_do_Educador.Repositories;
+using Central_do_Educador.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Central_do_Educador
+{
+    public partial class FrmPrincipal : Form
+    {
+        // Services / Repos
+        private readonly ConfigRepository _configRepo;
+
+        // Configurações (taxa + comissão)
+        private Configuracao _config = new();
+
+        private readonly RegistroTaxaService _service =
+        new RegistroTaxaService(new RegistroRepository(), new AlunoRepository());
+
+        private readonly RegistroRepository _repo = new RegistroRepository();
+
+        private readonly System.Windows.Forms.Timer _tAtualiza = new();
+
+        private string _sortCol = "";
+        private bool _sortAsc = true;
+        private readonly BindingSource _bs = new();
+
+        private List<RegistroTaxa> _listaAtual = new List<RegistroTaxa>();
+
+        public FrmPrincipal()
+        {
+            InitializeComponent();
+
+            _configRepo = new ConfigRepository();
+
+            _tAtualiza.Interval = 250; // 0,25s (parece instantâneo)
+            _tAtualiza.Tick += (s, e) =>
+            {
+                _tAtualiza.Stop();
+                AtualizarGrid();
+            };
+
+            // liga os eventos
+            dtpDe.ValueChanged += (_, __) => AgendarAtualizacao();
+            dtpAte.ValueChanged += (_, __) => AgendarAtualizacao();
+
+            // opcional: quando fecha o calendário
+            dtpDe.CloseUp += (_, __) => AgendarAtualizacao();
+            dtpAte.CloseUp += (_, __) => AgendarAtualizacao();
+
+            // Vincula o BindingSource ao DataGridView UMA VEZ.
+            // Assim AtualizarGrid e CarregarGrid podem apenas atualizar _bs.DataSource.
+            if (dgvMain != null)
+            {
+                dgvMain.AutoGenerateColumns = true;
+                dgvMain.DataSource = _bs;
+            }
+
+            // Inicializa o BindingSource com a lista atual (mesmo vazia)
+            _bs.DataSource = _listaAtual;
+        }
+
+        private void AgendarAtualizacao()
+        {
+            _tAtualiza.Stop();
+            _tAtualiza.Start();
+        }
+
+        private void Principal_Load(object sender, EventArgs e)
+        {
+            CarregarConfiguracoes();
+
+            SetarPeriodoPadrao();
+
+            AtualizarGrid();
+
+            // 3) Carrega o grid ao abrir.
+            CarregarGrid();
+
+            dgvMain.ColumnHeaderMouseClick += dgvMain_ColumnHeaderMouseClick;
+        }
+
+        private void AtualizarGrid()
+        {
+            try
+            {
+                var de = dtpDe.Value.Date;
+                var ate = dtpAte.Value.Date;
+
+                if (de > ate)
+                {
+                    dtpAte.Value = dtpDe.Value;
+                    ate = dtpAte.Value.Date;
+                }
+
+                var alunoLike = txtFiltroAluno.Text?.Trim() ?? "";
+                bool? lancado = chkSomenteLancados.Checked ? true : (bool?)null;
+
+
+                // ✅ GARANTE lista não-nula
+                _listaAtual = _repo.GetFiltered(de, ate, alunoLike, lancado) ?? new List<RegistroTaxa>();
+
+                // Reaplica ordenação se existir
+                if (!string.IsNullOrWhiteSpace(_sortCol))
+                    _listaAtual = OrdenarLista(_listaAtual, _sortCol, _sortAsc);
+
+                // ✅ Força refresh real no grid
+                _bs.DataSource = null;
+                _bs.DataSource = _listaAtual;
+                _bs.ResetBindings(false);
+
+                AjustarColunasGrid();
+
+                // ✅ SEMPRE atualiza rodapé (mesmo vazia)
+                AtualizarRodapeTotais(_listaAtual);
+
+                // Setinha após bind
+                if (!string.IsNullOrWhiteSpace(_sortCol))
+                    AplicarSetinhaOrdenacao(_sortCol, _sortAsc);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+                // ✅ Em erro, zera rodapé para não ficar mostrando valor velho
+                AtualizarRodapeTotais(new List<RegistroTaxa>());
+            }
+        }
+
+        private void CarregarConfiguracoes()
+        {
+            try
+            {
+                _config = _configRepo.Get();
+            }
+            catch
+            {
+                // Se der erro de conexão/config, mantém defaults (0) pra não quebrar a tela.
+                _config = new Configuracao();
+            }
+        }
+
+        private void SetarPeriodoPadrao()
+        {
+            // Se os controles não existirem no Principal, apague esse método.
+            if (dtpDe == null || dtpAte == null) return;
+
+            var hoje = DateTime.Today;
+            dtpDe.Value = new DateTime(hoje.Year, hoje.Month, 1);
+            dtpAte.Value = hoje;
+        }
+
+        private void controleDeTaxaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var tela = new FrmControleTaxa();
+
+            tela.FormClosed += (_, __) => AtualizarGrid(); // atualiza ao fechar
+
+            tela.Show();
+            /*
+            // Evita abrir várias telas iguais.
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f is FrmControleTaxa)
+                {
+                    f.BringToFront();
+                    f.Activate();
+                    return;
+                }
+            }
+
+            var tela = new FrmControleTaxa();
+            tela.Show();*/
+        }
+
+        // ---------------- GRID (READ) ----------------
+        private void CarregarGrid()
+        {
+            if (dgvMain == null) return;
+
+            var de = dtpDe?.Value.Date ?? DateTime.Today.AddMonths(-1);
+            var ate = dtpAte?.Value.Date ?? DateTime.Today;
+            var alunoLike = txtFiltroAluno?.Text?.Trim() ?? "";
+
+            // Adicione o argumento 'lancado' como string
+            string lancado = chkSomenteLancados.Checked ? "true" : "false";
+
+            var lista = _service.Listar(de, ate, alunoLike, lancado) ?? new List<RegistroTaxa>();
+
+            // Atualiza o BindingSource em vez de atribuir diretamente ao DataGridView.
+            _listaAtual = lista;
+            _bs.DataSource = _listaAtual;
+            _bs.ResetBindings(false);
+
+            AtualizarRodapeTotais(lista);
+        }
+
+        
+        private void AjustarColunasGrid()
+        {
+            if (dgvMain == null || dgvMain.Columns.Count == 0)
+                return;
+
+            dgvMain.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvMain.MultiSelect = false;
+            dgvMain.ReadOnly = true;
+            dgvMain.AllowUserToAddRows = false;
+            dgvMain.AllowUserToDeleteRows = false;
+            dgvMain.AllowUserToResizeRows = false;
+            dgvMain.RowHeadersVisible = false;
+
+            void Hide(string col)
+            {
+                if (dgvMain.Columns.Contains(col))
+                    dgvMain.Columns[col].Visible = false;
+            }
+
+            void Header(string col, string text)
+            {
+                if (dgvMain.Columns.Contains(col))
+                    dgvMain.Columns[col].HeaderText = text;
+            }
+
+            void Width(string col, int w)
+            {
+                if (dgvMain.Columns.Contains(col))
+                    dgvMain.Columns[col].Width = w;
+            }
+
+            void FormatDate(string col)
+            {
+                if (dgvMain.Columns.Contains(col))
+                    dgvMain.Columns[col].DefaultCellStyle.Format = "dd/MM/yyyy";
+            }
+
+            void AlignCenter(string col)
+            {
+                if (dgvMain.Columns.Contains(col))
+                    dgvMain.Columns[col].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+
+            // Ocultar colunas internas
+            Hide("AlunoId");
+            Hide("UsuarioId");
+
+            // Títulos
+            Header("Id", "Id");
+            Header("NomeAluno", "Nome do Aluno");
+            Header("NomeUsuario", "Usuário");
+            Header("DataFalta", "Data da Falta");
+            Header("DataRegistro", "Data do Registro");
+            Header("DataReposicao", "Data de Reposição");
+            Header("Quantidade", "Qtd. de Falta");
+            Header("Lancado", "Lançado");
+            Header("NaoAgendado", "Não agendado");
+            Header("Historico", "Histórico");
+            Header("Observacao", "Observação");
+
+            // Formato de data
+            FormatDate("DataFalta");
+            FormatDate("DataRegistro");
+            FormatDate("DataReposicao");
+
+            // Larguras
+            Width("Id", 60);
+            Width("NomeAluno", 260);
+            Width("NomeUsuario", 120);
+            Width("DataFalta", 110);
+            Width("DataRegistro", 120);
+            Width("DataReposicao", 130);
+            Width("Quantidade", 100);
+            Width("Lancado", 120);
+            Width("NaoAgendado", 220);
+            Width("Historico", 100);
+            Width("Observacao", 240);
+
+            // Alinhamentos
+            AlignCenter("Id");
+            AlignCenter("DataFalta");
+            AlignCenter("DataRegistro");
+            AlignCenter("DataReposicao");
+            AlignCenter("Quantidade");
+            AlignCenter("Lancado");
+            AlignCenter("NaoAgendado");
+            AlignCenter("Historico");
+
+            // Ordem
+            int idx = 0;
+            void Order(string col)
+            {
+                if (dgvMain.Columns.Contains(col))
+                    dgvMain.Columns[col].DisplayIndex = idx++;
+            }
+
+            Order("Id");
+            Order("NomeAluno");
+            Order("DataFalta");
+            Order("DataRegistro");
+            Order("DataReposicao");
+            Order("Quantidade");
+            Order("Lancado");
+            Order("NaoAgendado");
+            Order("Historico");
+            Order("NomeUsuario");
+            Order("Observacao");
+
+            if (dgvMain.Columns.Contains("Observacao"))
+                dgvMain.Columns["Observacao"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+        }
+
+        private void CustomizarGrid(DataGridView dgv)
+        {
+            dgv.AllowUserToAddRows = false;
+            dgv.AllowUserToDeleteRows = false;
+            dgv.ReadOnly = true;
+            dgv.MultiSelect = false;
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv.RowHeadersVisible = false;
+            dgv.AutoGenerateColumns = true;
+
+            // Cabeçalho (estilo + altura)
+            dgv.EnableHeadersVisualStyles = false;
+            dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dgv.ColumnHeadersHeight = 36;
+
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgv.ColumnHeadersDefaultCellStyle.Font = new Font("Century Gothic", 9, FontStyle.Bold);
+            dgv.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(30, 30, 30);
+            dgv.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+
+            // Linhas
+            dgv.DefaultCellStyle.Font = new Font("Century Gothic", 9, FontStyle.Regular);
+            dgv.DefaultCellStyle.SelectionBackColor = Color.FromArgb(220, 230, 255);
+            dgv.DefaultCellStyle.SelectionForeColor = Color.Black;
+            dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+
+            dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+        }
+
+        private void AtualizarRodapeTotais(List<RegistroTaxa> lista)
+        {
+            lista ??= new List<RegistroTaxa>();
+
+
+            // ✅ Sempre recalcula do zero
+            var qtdTotal = lista.Sum(x => Math.Max(0, x.Quantidade));
+
+
+            var valorTaxa = _config?.ValorTaxaPadrao ?? 0m;
+            var percComissao = _config?.PercentualComissao ?? 0m;
+
+
+            var total = qtdTotal * valorTaxa;
+            var comissao = total * (percComissao / 100m);
+
+
+            total = Math.Round(total, 2, MidpointRounding.AwayFromZero);
+            comissao = Math.Round(comissao, 2, MidpointRounding.AwayFromZero);
+
+
+            // ✅ Mesmo quando lista.Count == 0, isso aqui vai atualizar e mostrar 0
+            if (lblTotalRegistros != null)
+                lblTotalRegistros.Text = $"Total registros: {lista.Count}";
+
+
+            if (lblTotalFaltas != null)
+                lblTotalFaltas.Text = $"Qtd. faltas: {qtdTotal}";
+
+
+            if (lblTotal != null)
+                lblTotal.Text = $"Total: R$ {total:N2}";
+
+
+            if (lblComissao != null)
+                lblComissao.Text = $"Comissão: R$ {comissao:N2}";
+        }
+
+        private void Principal_Activated(object sender, EventArgs e)
+        {
+            AtualizarGrid();
+        }
+
+        private void chkSomenteLancados_CheckedChanged(object sender, EventArgs e)
+        {
+            AtualizarGrid();
+        }
+
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvMain.CurrentRow == null)
+                {
+                    MessageBox.Show("Selecione um registro para excluir.");
+                    return;
+                }
+
+                // Quando está bindado em lista de objetos
+                if (dgvMain.CurrentRow.DataBoundItem is not RegistroTaxa item)
+                {
+                    MessageBox.Show("Não foi possível identificar o registro selecionado.");
+                    return;
+                }
+
+                var resp = MessageBox.Show(
+                    $"Deseja realmente excluir o registro Id {item.Id} do aluno '{item.NomeAluno}'?",
+                    "Confirmar exclusão",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (resp != DialogResult.Yes) return;
+
+                // Se você usa service:
+                _service.Delete(item.Id);
+
+                // ou se usa repo direto:
+                // _repo.Delete(item.Id);
+
+                AtualizarGrid(); // recarrega do banco
+                MessageBox.Show("Registro excluído com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvMain_DataSourceChanged(object sender, EventArgs e)
+        {
+            CustomizarGrid(dgvMain);
+        }
+
+        private RegistroTaxa? ObterSelecionado()
+        {
+            if (dgvMain.CurrentRow?.DataBoundItem is RegistroTaxa r)
+                return r;
+
+            return null;
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dgvMain.CurrentRow?.DataBoundItem is not RegistroTaxa r)
+                {
+                    MessageBox.Show("Selecione um registro para editar.");
+                    return;
+                }
+
+                var tela = new FrmControleTaxa(r.Id);
+
+                tela.FormClosed += (_, __) => AtualizarGrid(); // atualiza ao voltar
+
+                tela.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void dgvMain_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void btnFiltro_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 1) Verificações de segurança
+                if (panelFiltro == null) return;
+                if (btnFiltro == null)
+                {
+                    // Apenas alterna visibilidade se o botão não existir por algum motivo
+                    panelFiltro.Visible = !panelFiltro.Visible;
+                    return;
+                }
+
+                // 2) Alterna entre oculto e visível, salvando/restaurando altura para comportamento "recolhido"
+                if (panelFiltro.Visible)
+                {
+                    // salva a altura atual para restaurar depois
+                    panelFiltro.Tag = panelFiltro.Height;
+                    panelFiltro.Visible = false;
+                    btnFiltro.Text = "Mostrar Filtro";
+                }
+                else
+                {
+                    // restaura altura se estiver armazenada
+                    if (panelFiltro.Tag is int h && h > 0)
+                        panelFiltro.Height = h;
+
+                    panelFiltro.Visible = true;
+                    btnFiltro.Text = "Ocultar Filtro";
+                }
+            }
+            catch (Exception ex)
+            {
+                // Em caso de erro, apenas mostra mensagem e não impede a aplicação
+                MessageBox.Show($"Erro ao alternar filtro: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dgvMain_ColumnHeaderMouseClick(object? sender, DataGridViewCellMouseEventArgs e)
+        {
+            var col = dgvMain.Columns[e.ColumnIndex];
+            if (col == null) return;
+
+            var prop = string.IsNullOrWhiteSpace(col.DataPropertyName) ? col.Name : col.DataPropertyName;
+            if (string.IsNullOrWhiteSpace(prop)) return;
+
+            if (_sortCol == prop) _sortAsc = !_sortAsc;
+            else { _sortCol = prop; _sortAsc = true; }
+
+            OrdenarGridPor(prop, _sortAsc);
+
+            // ⚠️ depois de reatribuir DataSource, a coluna muda,
+            // então aplique a setinha pelo nome
+            AplicarSetinhaOrdenacao(prop, _sortAsc);
+        }
+
+        private void OrdenarGridPor(string propriedade, bool asc)
+        {
+            // Tenta obter a lista do BindingSource; fallback para _listaAtual
+            var lista = _bs.DataSource as List<RegistroTaxa> ?? _listaAtual;
+
+            if (lista == null || string.IsNullOrWhiteSpace(propriedade))
+                return;
+
+            // Ordena por reflection (simples e funciona pra qualquer propriedade)
+            Func<RegistroTaxa, object?> key = r =>
+                r.GetType().GetProperty(propriedade)?.GetValue(r, null);
+
+            var ordenada = asc
+                ? lista.OrderBy(key).ToList()
+                : lista.OrderByDescending(key).ToList();
+
+            // Atualiza a lista atual e o BindingSource
+            _listaAtual = ordenada;
+            _bs.DataSource = _listaAtual;
+            _bs.ResetBindings(false);
+        }
+
+        private void AplicarSetinhaOrdenacao(string prop, bool asc)
+        {
+            if (dgvMain.Columns.Count == 0) return;
+
+            // Limpa setas
+            foreach (DataGridViewColumn c in dgvMain.Columns)
+                c.HeaderCell.SortGlyphDirection = SortOrder.None;
+
+            // Acha a coluna atual do grid (as colunas podem ter sido recriadas)
+            var col = dgvMain.Columns
+                .Cast<DataGridViewColumn>()
+                .FirstOrDefault(c =>
+                    string.Equals(c.DataPropertyName, prop, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(c.Name, prop, StringComparison.OrdinalIgnoreCase));
+
+            if (col != null)
+                col.HeaderCell.SortGlyphDirection = asc ? SortOrder.Ascending : SortOrder.Descending;
+        }
+
+        private List<RegistroTaxa> OrdenarLista(List<RegistroTaxa> lista, string propriedade, bool asc)
+        {
+            if (string.IsNullOrWhiteSpace(propriedade) || lista == null)
+                return lista ?? new List<RegistroTaxa>();
+
+            Func<RegistroTaxa, object?> key = r =>
+                r.GetType().GetProperty(propriedade)?.GetValue(r, null);
+
+            return asc
+                ? lista.OrderBy(key).ToList()
+                : lista.OrderByDescending(key).ToList();
+        }
+
+        private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var tela = new FrmUsuarios();
+            tela.Show();
+        }
+    }
+}

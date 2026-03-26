@@ -1,0 +1,145 @@
+﻿using ExcelDataReader;
+//using MySql.Data.MySqlClient;
+using Microsoft.Data.Sqlite;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer; // Necessário instalar via NuGet
+
+namespace Central_do_Educador
+{
+    public partial class FrmEntregaLivros : Form
+    {
+        private string connString = Central_do_Educador.Data.Db.ConnectionString;
+        private readonly Timer _timerPesquisa = new Timer();
+        private DataTable? _dtPreview;
+
+        private bool _loaded = false;
+
+        public FrmEntregaLivros()
+        {
+            InitializeComponent();
+
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            // Inicializar valores padrão dos filtros
+            if (cmbDiaSemana != null)
+            {
+                cmbDiaSemana.SelectedIndex = 0; // "Todos"
+            }
+        }
+
+        private async void EntregaLivros_Load(object sender, EventArgs e)
+        {
+            _loaded = true;
+
+            // Posiciona lblEmissao à direita (se já existir)
+            if (lblEmissao != null)
+            {
+                lblEmissao.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            }
+
+            FormatarGridEntregaLivros();
+            AtualizarGrid();
+        }
+
+        private void AplicarFiltros(object? sender, EventArgs e)
+        {
+            AtualizarGrid();
+        }
+
+        private void FormatarGridEntregaLivros()
+        {
+            var g = dgvEntregas;
+            if (g == null || g.Columns == null) return;
+
+            // comportamento/visual
+            g.AllowUserToAddRows = false;
+            g.AllowUserToDeleteRows = false;
+            g.AllowUserToResizeRows = false;
+            g.ReadOnly = true;
+            g.MultiSelect = false;
+            g.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            g.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            g.RowHeadersVisible = false;
+
+            g.EnableHeadersVisualStyles = false;
+            g.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            g.ColumnHeadersHeight = 32;
+
+            // zebra
+            g.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(245, 245, 245);
+
+            // fonte
+            g.DefaultCellStyle.Font = new System.Drawing.Font("Century Gothic", 10F);
+            g.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold);
+
+            // ====== colunas (headers + alinhamento + largura mínima) ======
+            AjustarColunaTexto(g, "Aluno", "Aluno", 220, DataGridViewContentAlignment.MiddleLeft);
+            AjustarColunaTexto(g, "Materia", "Matéria", 160, DataGridViewContentAlignment.MiddleLeft);
+
+            AjustarColunaNumero(g, "AulasConcluidas", "Aulas Concluídas", 70);
+
+            AjustarColunaTexto(g, "DiasAgendamento", "Dias", 90, DataGridViewContentAlignment.MiddleCenter);
+            AjustarColunaTexto(g, "HorasAgendamento", "Horas", 90, DataGridViewContentAlignment.MiddleCenter);
+
+            AjustarColunaTexto(g, "ProximaMateria", "Próx. Matéria", 170, DataGridViewContentAlignment.MiddleLeft);
+            AjustarColunaTexto(g, "Apostila", "Apostila", 120, DataGridViewContentAlignment.MiddleLeft);
+
+            AjustarColunaTexto(g, "EntregaFisica", "Entrega Física", 110, DataGridViewContentAlignment.MiddleCenter);
+
+            // Quebra linha em campos mais longos (opcional)
+            if (g.Columns.Contains("ProximaMateria"))
+                g.Columns["ProximaMateria"]!.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
+            if (g.Columns.Contains("Apostila"))
+                g.Columns["Apostila"]!.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
+            g.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+
+            // Centralizações (reforço)
+            CentralizarSeExistir(g, "AulasConcluidas");
+            CentralizarSeExistir(g, "DiasAgendamento");
+            CentralizarSeExistir(g, "HorasAgendamento");
+            CentralizarSeExistir(g, "EntregaFisica");
+
+            // Formata: EntregaFisica (S/N) -> (Sim/Não) e destaca pendência
+            g.CellFormatting -= dgvEntregas_CellFormatting;
+            g.CellFormatting += dgvEntregas_CellFormatting;
+
+            // (opcional) destaque por linha: pendente em vermelho
+            DestacarPendenciasEntrega();
+        }
+
+        private DataTable LerExcelParaDataTable(string caminho)
+        {
+            // Necessário: Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            using var stream = File.Open(caminho, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using var reader = ExcelReaderFactory.CreateReader(stream);
+
+            var dt = new DataTable();
+            dt.Columns.Add("Aluno");
+            dt.Columns.Add("Materia");
+            dt.Columns.Add("AulasConcluidas");
+            dt.Columns.Add("DiasAgendamento");
+            dt.Columns.Add("HorasAgendamento");
+            dt.Columns.Add("ProximaMateria");
+            dt.Columns.Add("Apostila");
+            dt.Columns.Add("EntregaFisica"); // S/N
+
+            bool primeiraLinha = true;
+
+            while (reader.Read())
+            {
+                if (primeiraLinha) { primeiraLinha = false; continue; } // pula cabeçalho
+
+                string aluno = reader.GetValue(0)?.ToString()?.Trim() ?? "";
+                string materia = reader.GetValue(1)?.ToString()?

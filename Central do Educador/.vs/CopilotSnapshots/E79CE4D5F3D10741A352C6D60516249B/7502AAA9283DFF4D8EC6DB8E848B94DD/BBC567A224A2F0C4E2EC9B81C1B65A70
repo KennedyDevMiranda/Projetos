@@ -1,0 +1,15 @@
+﻿using Central_do_Educador;
+using Central_do_Educador.Forms;
+using System;
+using System.Windows.Forms;
+
+internal static class Program
+{
+    [STAThread]
+    static async Task Main()
+    {
+        ApplicationConfiguration.Initialize();
+        await Central_do_Educador.Data.Db.InitializeAsync();
+        Application.Run(new FrmLogin());
+    }
+}

@@ -1,0 +1,116 @@
+﻿using System;
+using System.Collections.Generic;
+using Central_do_Educador.Models;
+using Central_do_Educador.Repositories;
+
+namespace Central_do_Educador.Services
+{
+    public class RegistroTaxaService
+    {
+        private readonly RegistroRepository _repo;
+        private readonly AlunoRepository _alunoRepo;
+
+        public RegistroTaxaService(RegistroRepository repo, AlunoRepository alunoRepo)
+        {
+            _repo = repo;
+            _alunoRepo = alunoRepo;
+        }
+
+        public void Criar(
+            string alunoNome,
+            DateTime dataFalta,
+            DateTime dataRegistro,
+            DateTime? dataReposicao,
+            int quantidade,
+            bool lancado,
+            bool naoAgendado,
+            bool historico,
+            string observacao,
+            int usuarioId)
+        {
+            if (string.IsNullOrWhiteSpace(alunoNome))
+                throw new ArgumentException("Digite o nome do aluno.");
+
+            if (quantidade <= 0)
+                throw new ArgumentException("Quantidade precisa ser maior que zero.");
+
+            if (naoAgendado && dataReposicao.HasValue)
+                throw new ArgumentException("Se estiver 'Não agendado', a Data de Reposição deve ficar vazia.");
+
+            // resolve aluno
+            var id = _alunoRepo.BuscarIdPorNomeExato(alunoNome.Trim());
+            var alunoId = id ?? _alunoRepo.CriarRetornarId(alunoNome.Trim()); // cria se não existir
+
+            var model = new RegistroTaxa
+            {
+                AlunoId = alunoId,
+                UsuarioId = usuarioId,
+                DataFalta = dataFalta.Date,
+                DataRegistro = dataRegistro.Date,
+                DataReposicao = dataReposicao?.Date,
+                Quantidade = quantidade,
+                Lancado = lancado,
+                NaoAgendado = naoAgendado,
+                Historico = historico,
+                Observacao = observacao?.Trim() ?? ""
+            };
+
+            _repo.Insert(model);
+        }
+
+        public List<RegistroTaxa> Listar(DateTime de, DateTime ate, string alunoLike, string lancado)
+        {
+            // Converte o parâmetro 'lancado' de string para bool? conforme esperado pelo repositório
+            bool? lancadoBool = null;
+            if (!string.IsNullOrWhiteSpace(lancado))
+            {
+                if (bool.TryParse(lancado, out var parsed))
+                    lancadoBool = parsed;
+            }
+            return _repo.GetFiltered(de, ate, alunoLike, lancadoBool);
+        }
+
+        public void Delete(int id)
+        {
+            _repo.Delete(id);
+        }
+
+        public RegistroTaxa? BuscarPorId(int id)
+        {
+            // Se não existir método no repositório, você pode buscar todos e filtrar:
+            var registros = _repo.GetFiltered(DateTime.MinValue, DateTime.MaxValue, null!, null);
+            return registros.Find(r => r.Id == id);
+        }
+
+        public void Atualizar(RegistroTaxaDto dto)
+        {
+            // Busca todos os registros e filtra pelo Id, já que não existe BuscarPorId no repositório
+            var registro = _repo.GetFiltered(DateTime.MinValue, DateTime.MaxValue, null!, null)
+                .Find(r => r.Id == dto.Id);
+            if (registro == null)
+                throw new Exception("Registro não encontrado.");
+
+            // Se o nome do aluno foi informado/alterado, resolvemos o AlunoId (cria se necessário)
+            if (!string.IsNullOrWhiteSpace(dto.AlunoNome))
+            {
+                var nomeTrim = dto.AlunoNome.Trim();
+                var id = _alunoRepo.BuscarIdPorNomeExato(nomeTrim);
+                var alunoId = id ?? _alunoRepo.CriarRetornarId(nomeTrim);
+
+                registro.AlunoId = alunoId;
+                registro.NomeAluno = nomeTrim;
+            }
+
+            registro.DataFalta = dto.DataFalta;
+            registro.DataRegistro = dto.DataRegistro;
+            registro.DataReposicao = dto.DataReposicao;
+            registro.Quantidade = dto.Quantidade;
+            registro.Lancado = dto.Lancado;
+            registro.NaoAgendado = dto.NaoAgendado;
+            registro.Historico = dto.Historico;
+            registro.Observacao = dto.Observacao;
+
+            _repo.Update(registro);
+        }
+    }
+}

@@ -1,0 +1,435 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+//using MySql.Data.MySqlClient;
+using Microsoft.Data.Sqlite;
+using ExcelDataReader;
+using Timer = System.Windows.Forms.Timer; // Necessário instalar via NuGet
+
+namespace Central_do_Educador
+{
+    public partial class FrmEntregaLivros : Form
+    {
+        private string connString = Central_do_Educador.Data.Db.ConnectionString;
+        private readonly Timer _timerPesquisa = new Timer();
+        private DataTable? _dtPreview;
+
+        public FrmEntregaLivros()
+        {
+            InitializeComponent();
+
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            
+            // Inicializar valores padrão dos filtros
+            if (cmbDiaSemana != null)
+            {
+                cmbDiaSemana.SelectedIndex = 0; // "Todos"
+            }
+        }
+
+        private async void EntregaLivros_Load(object sender, EventArgs e)
+        {
+            FormatarGridEntregaLivros();
+            AtualizarGrid();
+        }
+
+        private void AplicarFiltros(object? sender, EventArgs e)
+        {
+            AtualizarGrid();
+        }
+
+        private void FormatarGridEntregaLivros()
+        {
+            var g = dgvEntregas; // <-- usa o nome do seu DataGridView do módulo livros
+            if (g == null) return;
+
+            // comportamento/visual
+            g.AllowUserToAddRows = false;
+            g.AllowUserToDeleteRows = false;
+            g.AllowUserToResizeRows = false;
+            g.ReadOnly = true;
+            g.MultiSelect = false;
+            g.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            g.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            g.RowHeadersVisible = false;
+
+            g.EnableHeadersVisualStyles = false;
+            g.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            g.ColumnHeadersHeight = 32;
+
+            // zebra
+            g.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(245, 245, 245);
+
+            // fonte
+            g.DefaultCellStyle.Font = new System.Drawing.Font("Century Gothic", 10F);
+            g.ColumnHeadersDefaultCellStyle.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold);
+
+            // ====== colunas (headers + alinhamento + largura mínima) ======
+            AjustarColunaTexto(g, "Aluno", "Aluno", 220, DataGridViewContentAlignment.MiddleLeft);
+            AjustarColunaTexto(g, "Materia", "Matéria", 160, DataGridViewContentAlignment.MiddleLeft);
+
+            AjustarColunaNumero(g, "AulasConcluidas", "Aulas Concluídas", 70);
+
+            AjustarColunaTexto(g, "DiasAgendamento", "Dias", 90, DataGridViewContentAlignment.MiddleCenter);
+            AjustarColunaTexto(g, "HorasAgendamento", "Horas", 90, DataGridViewContentAlignment.MiddleCenter);
+
+            AjustarColunaTexto(g, "ProximaMateria", "Próx. Matéria", 170, DataGridViewContentAlignment.MiddleLeft);
+            AjustarColunaTexto(g, "Apostila", "Apostila", 120, DataGridViewContentAlignment.MiddleLeft);
+
+            AjustarColunaTexto(g, "EntregaFisica", "Entrega Física", 110, DataGridViewContentAlignment.MiddleCenter);
+
+            // Quebra linha em campos mais longos (opcional)
+            if (g.Columns.Contains("ProximaMateria"))
+                g.Columns["ProximaMateria"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
+            if (g.Columns.Contains("Apostila"))
+                g.Columns["Apostila"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+
+            g.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+
+            // Centralizações (reforço)
+            CentralizarSeExistir(g, "AulasConcluidas");
+            CentralizarSeExistir(g, "DiasAgendamento");
+            CentralizarSeExistir(g, "HorasAgendamento");
+            CentralizarSeExistir(g, "EntregaFisica");
+
+            // Formata: EntregaFisica (S/N) -> (Sim/Não) e destaca pendência
+            g.CellFormatting -= dgvEntregas_CellFormatting;
+            g.CellFormatting += dgvEntregas_CellFormatting;
+
+            // (opcional) destaque por linha: pendente em vermelho
+            DestacarPendenciasEntrega();
+        }
+
+        private DataTable LerExcelParaDataTable(string caminho)
+        {
+            // Necessário: Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            using var stream = File.Open(caminho, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+            using var reader = ExcelReaderFactory.CreateReader(stream);
+
+            var dt = new DataTable();
+            dt.Columns.Add("Aluno");
+            dt.Columns.Add("Materia");
+            dt.Columns.Add("AulasConcluidas");
+            dt.Columns.Add("DiasAgendamento");
+            dt.Columns.Add("HorasAgendamento");
+            dt.Columns.Add("ProximaMateria");
+            dt.Columns.Add("Apostila");
+            dt.Columns.Add("EntregaFisica"); // S/N
+
+            bool primeiraLinha = true;
+
+            while (reader.Read())
+            {
+                if (primeiraLinha) { primeiraLinha = false; continue; } // pula cabeçalho
+
+                string aluno = reader.GetValue(0)?.ToString()?.Trim() ?? "";
+                string materia = reader.GetValue(1)?.ToString()?.Trim() ?? "";
+                string aulas = reader.GetValue(2)?.ToString()?.Trim() ?? "";
+                string dias = reader.GetValue(3)?.ToString()?.Trim() ?? "";
+                string horas = reader.GetValue(4)?.ToString()?.Trim() ?? "";
+                string proximaMateria = reader.GetValue(5)?.ToString()?.Trim() ?? "";
+                string apostila = reader.GetValue(6)?.ToString()?.Trim() ?? "";
+                string entrega = reader.GetValue(7)?.ToString()?.Trim().ToUpper() ?? "N";
+
+                if (string.IsNullOrWhiteSpace(aluno)) continue;
+
+                // normaliza entrega
+                entrega = entrega == "S" || entrega == "SIM" ? "S" : "N";
+
+                dt.Rows.Add(aluno, materia, aulas, dias, horas, proximaMateria, apostila, entrega);
+            }
+
+            return dt;
+        }
+
+        private DataTable LerCsvParaDataTable(string caminho)
+        {
+            var dt = new DataTable();
+            dt.Columns.Add("Aluno");
+            dt.Columns.Add("Materia");
+            dt.Columns.Add("AulasConcluidas");
+            dt.Columns.Add("EntregaFisica");
+
+            var linhas = File.ReadAllLines(caminho, Encoding.GetEncoding(1252));
+            if (linhas.Length == 0) return dt;
+
+            char sep = linhas[0].Contains(';') ? ';' : ',';
+
+            foreach (var linha in linhas.Skip(1))
+            {
+                if (string.IsNullOrWhiteSpace(linha)) continue;
+
+                var dados = linha.Split(sep);
+                if (dados.Length < 4) continue;
+
+                string aluno = dados[0].Trim();
+                string materia = dados[1].Trim();
+                string aulas = dados[2].Trim();
+                string entrega = (dados[3] ?? "N").Trim().ToUpper();
+
+                if (string.IsNullOrWhiteSpace(aluno)) continue;
+
+                entrega = entrega == "S" || entrega == "SIM" ? "S" : "N";
+
+                dt.Rows.Add(aluno, materia, aulas, entrega);
+            }
+
+            return dt;
+        }
+
+        private void btnConfirmarImportacao_Click(object sender, EventArgs e)
+        {
+            if (_dtPreview == null || _dtPreview.Rows.Count == 0)
+            {
+                MessageBox.Show("Nenhuma prévia carregada.");
+                return;
+            }
+
+            try
+            {
+                using var conn = new SqliteConnection(connString);
+                conn.Open();
+
+                using var tx = conn.BeginTransaction();
+
+                foreach (DataRow row in _dtPreview.Rows)
+                {
+                    string aluno = row["Aluno"]?.ToString() ?? "";
+                    string materia = row["Materia"]?.ToString() ?? "";
+                    string aulas = row["AulasConcluidas"]?.ToString() ?? "";
+                    string dias = row.Table.Columns.Contains("DiasAgendamento") ? row["DiasAgendamento"]?.ToString() ?? "" : "";
+                    string horas = row.Table.Columns.Contains("HorasAgendamento") ? row["HorasAgendamento"]?.ToString() ?? "" : "";
+                    string proximaMateria = row.Table.Columns.Contains("ProximaMateria") ? row["ProximaMateria"]?.ToString() ?? "" : "";
+                    string apostila = row.Table.Columns.Contains("Apostila") ? row["Apostila"]?.ToString() ?? "" : "";
+                    string entrega = row["EntregaFisica"]?.ToString() ?? "N";
+
+                    if (string.IsNullOrWhiteSpace(aluno)) continue;
+
+                    SalvarNoBanco(aluno, materia, aulas, dias, horas, proximaMateria, apostila, entrega, conn, tx);
+                }
+
+                tx.Commit();
+
+                MessageBox.Show("Importação gravada no banco com sucesso!");
+                AtualizarGrid();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao gravar no banco: " + ex.Message);
+            }
+        }
+
+        private void dgvEntregas_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+
+        }
+
+        private void btnImportar_Click(object sender, EventArgs e)
+        {
+            using var ofd = new OpenFileDialog
+            {
+                Filter = "Arquivos Suportados (*.xls, *.xlsx, *.csv)|*.xls;*.xlsx;*.csv"
+            };
+
+            if (ofd.ShowDialog() != DialogResult.OK) return;
+
+            try
+            {
+                string ext = Path.GetExtension(ofd.FileName).ToLower();
+
+                _dtPreview = (ext == ".csv")
+                    ? LerCsvParaDataTable(ofd.FileName)
+                    : LerExcelParaDataTable(ofd.FileName);
+
+                // ✅ Exibe no grid (pode ser o próprio dgvEntregas ou um dgvPreview separado)
+                dgvEntregas.DataSource = _dtPreview;
+
+                // opcional: aplicar formatação (se você tiver)
+                // FormatarGridEntregaLivros();
+
+                MessageBox.Show($"Prévia carregada: {_dtPreview.Rows.Count} linhas.\nAgora clique em Confirmar para gravar no banco.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao importar: " + ex.Message);
+            }
+        }
+
+        private void btnFiltros_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (grpAluno == null || grpLivroEntregue == null || grpDiaSemana == null) return;
+                if (btnFiltros == null) return;
+
+                // Alterna visibilidade dos GroupBoxes de filtro
+                bool visivel = grpAluno.Visible;
+                grpAluno.Visible = !visivel;
+                grpLivroEntregue.Visible = !visivel;
+                grpDiaSemana.Visible = !visivel;
+
+                btnFiltros.Text = visivel ? "Mostrar Filtros" : "Ocultar Filtros";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao alternar filtro: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SalvarNoBanco(string aluno, string materia, string aulas, string dias, string horas, string proximaMateria, string apostila, string entrega, SqliteConnection conn, SqliteTransaction tx)
+        {
+            // Tenta atualizar primeiro, se não existir, insere
+            string sqlUpdate = @"
+                UPDATE EntregaLivros 
+                SET Materia = @materia, 
+                    AulasConcluidas = @aulas, 
+                    DiasAgendamento = @dias,
+                    HorasAgendamento = @horas,
+                    ProximaMateria = @proximaMateria,
+                    Apostila = @apostila,
+                    EntregaFisica = @entrega
+                WHERE Aluno = @aluno";
+
+            using (var cmdUpdate = new SqliteCommand(sqlUpdate, conn, tx))
+            {
+                cmdUpdate.Parameters.AddWithValue("@aluno", aluno);
+                cmdUpdate.Parameters.AddWithValue("@materia", materia);
+                cmdUpdate.Parameters.AddWithValue("@aulas", aulas);
+                cmdUpdate.Parameters.AddWithValue("@dias", dias);
+                cmdUpdate.Parameters.AddWithValue("@horas", horas);
+                cmdUpdate.Parameters.AddWithValue("@proximaMateria", proximaMateria);
+                cmdUpdate.Parameters.AddWithValue("@apostila", apostila);
+                cmdUpdate.Parameters.AddWithValue("@entrega", entrega);
+
+                int rowsAffected = cmdUpdate.ExecuteNonQuery();
+
+                // Se não atualizou nenhuma linha, insere
+                if (rowsAffected == 0)
+                {
+                    string sqlInsert = @"
+                        INSERT INTO EntregaLivros (Aluno, Materia, AulasConcluidas, DiasAgendamento, HorasAgendamento, ProximaMateria, Apostila, EntregaFisica)
+                        VALUES (@aluno, @materia, @aulas, @dias, @horas, @proximaMateria, @apostila, @entrega)";
+
+                    using (var cmdInsert = new SqliteCommand(sqlInsert, conn, tx))
+                    {
+                        cmdInsert.Parameters.AddWithValue("@aluno", aluno);
+                        cmdInsert.Parameters.AddWithValue("@materia", materia);
+                        cmdInsert.Parameters.AddWithValue("@aulas", aulas);
+                        cmdInsert.Parameters.AddWithValue("@dias", dias);
+                        cmdInsert.Parameters.AddWithValue("@horas", horas);
+                        cmdInsert.Parameters.AddWithValue("@proximaMateria", proximaMateria);
+                        cmdInsert.Parameters.AddWithValue("@apostila", apostila);
+                        cmdInsert.Parameters.AddWithValue("@entrega", entrega);
+                        cmdInsert.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
+
+        private void AtualizarGrid()
+        {
+            if (dgvEntregas == null) return;
+
+            string filtroEntrega = rdbSim?.Checked == true ? "Sim" 
+                                 : rdbNao?.Checked == true ? "Não" 
+                                 : "Todos";
+            string pesquisa = (cmbPesquisaAluno?.Text ?? "").Trim();
+            string diaSemana = cmbDiaSemana?.SelectedItem?.ToString() ?? "Todos";
+
+            try
+            {
+                using var conn = new SqliteConnection(connString);
+                conn.Open();
+
+                string sql = @"
+                    SELECT Aluno, Materia, AulasConcluidas, 
+                           DiasAgendamento, HorasAgendamento, 
+                           ProximaMateria, Apostila, EntregaFisica
+                    FROM EntregaLivros
+                    WHERE 1=1";
+
+                if (filtroEntrega == "Sim")
+                    sql += " AND EntregaFisica = 'S'";
+                else if (filtroEntrega == "Não")
+                    sql += " AND EntregaFisica = 'N'";
+
+                if (!string.IsNullOrWhiteSpace(pesquisa))
+                    sql += " AND Aluno LIKE @pesquisa ESCAPE '\\'";
+
+                if (diaSemana != "Todos")
+                    sql += " AND DiasAgendamento LIKE @diaSemana ESCAPE '\\'";
+
+                sql += " ORDER BY EntregaFisica ASC, Aluno ASC";
+
+                using var cmd = new SqliteCommand(sql, conn);
+
+                if (!string.IsNullOrWhiteSpace(pesquisa))
+                {
+                    string pesquisaEscapada = pesquisa
+                        .Replace("\\", "\\\\")
+                        .Replace("%", "\\%")
+                        .Replace("_", "\\_");
+                    cmd.Parameters.AddWithValue("@pesquisa", $"%{pesquisaEscapada}%");
+                }
+
+                if (diaSemana != "Todos")
+                {
+                    string diaEscapado = diaSemana
+                        .Replace("\\", "\\\\")
+                        .Replace("%", "\\%")
+                        .Replace("_", "\\_");
+                    cmd.Parameters.AddWithValue("@diaSemana", $"%{diaEscapado}%");
+                }
+
+                var dt = new DataTable();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    dt.Load(reader);
+                }
+
+                dgvEntregas.DataSource = dt;
+                FormatarGridEntregaLivros();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao atualizar grid: " + ex.Message);
+            }
+        }
+
+        private void DestacarPendenciasEntrega()
+        {
+            // Implementação para destacar entregas pendentes
+            // Este método será chamado após carregar os dados no grid
+        }
+
+        private void AjustarColunaTexto(DataGridView g, string nome, string header, int minWidth, DataGridViewContentAlignment alignment)
+        {
+            if (!g.Columns.Contains(nome)) return;
+            g.Columns[nome].HeaderText = header;
+            g.Columns[nome].MinimumWidth = minWidth;
+            g.Columns[nome].DefaultCellStyle.Alignment = alignment;
+        }
+
+        private void AjustarColunaNumero(DataGridView g, string nome, string header, int minWidth)
+        {
+            if (!g.Columns.Contains(nome)) return;
+            g.Columns[nome].HeaderText = header;
+            g.Columns[nome].MinimumWidth = minWidth;
+            g.Columns[nome].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+
+        private void CentralizarSeExistir(DataGridView g, string nomeColuna)
+        {
+            if (g.Columns.Contains(nomeColuna))
+                g.Columns[nomeColuna].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+        }
+    }
+}

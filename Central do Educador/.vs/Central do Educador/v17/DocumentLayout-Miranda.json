@@ -1,0 +1,123 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{986B151D-8035-4089-A4B7-CD331097E047}|Central do Educador\\Central do Educador.csproj|c:\\users\\kenne\\onedrive - invoke microsoft partner\\kennedy\\programa\u00E7\u00E3o\\csharp\\central do educador\\central do educador\\forms\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{986B151D-8035-4089-A4B7-CD331097E047}|Central do Educador\\Central do Educador.csproj|solutionrelative:central do educador\\forms\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{986B151D-8035-4089-A4B7-CD331097E047}|Central do Educador\\Central do Educador.csproj|c:\\users\\kenne\\onedrive - invoke microsoft partner\\kennedy\\programa\u00E7\u00E3o\\csharp\\central do educador\\central do educador\\forms\\frmcontroletaxa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{986B151D-8035-4089-A4B7-CD331097E047}|Central do Educador\\Central do Educador.csproj|solutionrelative:central do educador\\forms\\frmcontroletaxa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{986B151D-8035-4089-A4B7-CD331097E047}|Central do Educador\\Central do Educador.csproj|C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\central do educador\\forms\\frmcontroletaxa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{986B151D-8035-4089-A4B7-CD331097E047}|Central do Educador\\Central do Educador.csproj|solutionrelative:central do educador\\forms\\frmcontroletaxa.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{986B151D-8035-4089-A4B7-CD331097E047}|Central do Educador\\Central do Educador.csproj|c:\\users\\kenne\\onedrive - invoke microsoft partner\\kennedy\\programa\u00E7\u00E3o\\csharp\\central do educador\\central do educador\\models\\relatoriofaltasservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{986B151D-8035-4089-A4B7-CD331097E047}|Central do Educador\\Central do Educador.csproj|solutionrelative:central do educador\\models\\relatoriofaltasservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{986B151D-8035-4089-A4B7-CD331097E047}|Central do Educador\\Central do Educador.csproj|c:\\users\\kenne\\onedrive - invoke microsoft partner\\kennedy\\programa\u00E7\u00E3o\\csharp\\central do educador\\central do educador\\repositories\\registrorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{986B151D-8035-4089-A4B7-CD331097E047}|Central do Educador\\Central do Educador.csproj|solutionrelative:central do educador\\repositories\\registrorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{986B151D-8035-4089-A4B7-CD331097E047}|Central do Educador\\Central do Educador.csproj|C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\central do educador\\forms\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{986B151D-8035-4089-A4B7-CD331097E047}|Central do Educador\\Central do Educador.csproj|solutionrelative:central do educador\\forms\\frmprincipal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FrmControleTaxa.cs",
+              "DocumentMoniker": "C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Forms\\FrmControleTaxa.cs",
+              "RelativeDocumentMoniker": "Central do Educador\\Forms\\FrmControleTaxa.cs",
+              "ToolTip": "C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Forms\\FrmControleTaxa.cs",
+              "RelativeToolTip": "Central do Educador\\Forms\\FrmControleTaxa.cs",
+              "ViewState": "AgIAABABAAAAAAAAAAAgwCYBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-03T23:04:33.925Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FrmControleTaxa.cs [Projeto]",
+              "DocumentMoniker": "C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Forms\\FrmControleTaxa.cs",
+              "RelativeDocumentMoniker": "Central do Educador\\Forms\\FrmControleTaxa.cs",
+              "ToolTip": "C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Forms\\FrmControleTaxa.cs [Projeto]",
+              "RelativeToolTip": "Central do Educador\\Forms\\FrmControleTaxa.cs [Projeto]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-03T23:04:31.098Z",
+              "EditorCaption": " [Projeto]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "RelatorioFaltasService.cs",
+              "DocumentMoniker": "C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Models\\RelatorioFaltasService.cs",
+              "RelativeDocumentMoniker": "Central do Educador\\Models\\RelatorioFaltasService.cs",
+              "ToolTip": "C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Models\\RelatorioFaltasService.cs",
+              "RelativeToolTip": "Central do Educador\\Models\\RelatorioFaltasService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-03T22:39:46.566Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "RegistroRepository.cs",
+              "DocumentMoniker": "C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Repositories\\RegistroRepository.cs",
+              "RelativeDocumentMoniker": "Central do Educador\\Repositories\\RegistroRepository.cs",
+              "ToolTip": "C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Repositories\\RegistroRepository.cs",
+              "RelativeToolTip": "Central do Educador\\Repositories\\RegistroRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-03T19:00:53.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FrmPrincipal.cs",
+              "DocumentMoniker": "C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Forms\\FrmPrincipal.cs",
+              "RelativeDocumentMoniker": "Central do Educador\\Forms\\FrmPrincipal.cs",
+              "ToolTip": "C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Forms\\FrmPrincipal.cs",
+              "RelativeToolTip": "Central do Educador\\Forms\\FrmPrincipal.cs",
+              "ViewState": "AgIAAKgAAAAAAAAAAAAuwKYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-03T14:31:17.981Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FrmPrincipal.cs [Projeto]",
+              "DocumentMoniker": "C:\\Users\\kenne\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Forms\\FrmPrincipal.cs",
+              "RelativeDocumentMoniker": "Central do Educador\\Forms\\FrmPrincipal.cs",
+              "ToolTip": "C:\\Users\\micro\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Forms\\FrmPrincipal.cs [Projeto]",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\micro\\OneDrive - INVOKE Microsoft Partner\\Kennedy\\Programa\u00E7\u00E3o\\CSharp\\Central do Educador\\Central do Educador\\Forms\\FrmPrincipal.cs [Projeto]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-03T14:29:01.282Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

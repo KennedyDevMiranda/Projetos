@@ -1,0 +1,255 @@
+﻿namespace Central_do_Educador
+{
+    partial class FrmEntregaLivros
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            dgvEntregas = new DataGridView();
+            btnImportar = new Button();
+            panelCabecalho = new Panel();
+            grpDiaSemana = new GroupBox();
+            cmbDiaSemana = new ComboBox();
+            grpLivroEntregue = new GroupBox();
+            rdbNao = new RadioButton();
+            rdbSim = new RadioButton();
+            rdbTodos = new RadioButton();
+            grpAluno = new GroupBox();
+            cmbPesquisaAluno = new ComboBox();
+            btnConfirmarImportacao = new Button();
+            btnFiltros = new Button();
+            btnImportar = new Button();
+            panelGrid = new Panel();
+            panelRodape = new Panel();
+            ((System.ComponentModel.ISupportInitialize)dgvEntregas).BeginInit();
+            panelCabecalho.SuspendLayout();
+            grpDiaSemana.SuspendLayout();
+            grpLivroEntregue.SuspendLayout();
+            grpAluno.SuspendLayout();
+            panelGrid.SuspendLayout();
+            SuspendLayout();
+            // 
+            // dgvEntregas
+            // 
+            dgvEntregas.BackgroundColor = SystemColors.Control;
+            dgvEntregas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvEntregas.Dock = DockStyle.Fill;
+            dgvEntregas.Location = new Point(0, 0);
+            dgvEntregas.Name = "dgvEntregas";
+            dgvEntregas.Size = new Size(1001, 358);
+            dgvEntregas.TabIndex = 0;
+            // 
+            // btnImportar
+            // 
+            btnImportar.Location = new Point(833, 78);
+            btnImportar.Name = "btnImportar";
+            btnImportar.Size = new Size(75, 27);
+            btnImportar.TabIndex = 1;
+            btnImportar.Text = "Importar";
+            btnImportar.UseVisualStyleBackColor = true;
+            btnImportar.Click += btnImportar_Click;
+            // 
+            // panelCabecalho
+            // 
+            panelCabecalho.Controls.Add(grpDiaSemana);
+            panelCabecalho.Controls.Add(grpLivroEntregue);
+            panelCabecalho.Controls.Add(grpAluno);
+            panelCabecalho.Controls.Add(btnConfirmarImportacao);
+            panelCabecalho.Controls.Add(btnFiltros);
+            panelCabecalho.Controls.Add(btnImportar);
+            panelCabecalho.Dock = DockStyle.Top;
+            panelCabecalho.Location = new Point(0, 0);
+            panelCabecalho.Name = "panelCabecalho";
+            panelCabecalho.Size = new Size(1001, 117);
+            panelCabecalho.TabIndex = 4;
+            // 
+            // grpDiaSemana
+            // 
+            grpDiaSemana.Controls.Add(cmbDiaSemana);
+            grpDiaSemana.Location = new Point(450, 12);
+            grpDiaSemana.Name = "grpDiaSemana";
+            grpDiaSemana.Size = new Size(200, 60);
+            grpDiaSemana.TabIndex = 8;
+            grpDiaSemana.TabStop = false;
+            grpDiaSemana.Text = "Dia da Semana";
+            // 
+            // cmbDiaSemana
+            // 
+            cmbDiaSemana.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbDiaSemana.FormattingEnabled = true;
+            cmbDiaSemana.Items.AddRange(new object[] { "Todos", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo" });
+            cmbDiaSemana.Location = new Point(6, 22);
+            cmbDiaSemana.Name = "cmbDiaSemana";
+            cmbDiaSemana.Size = new Size(188, 25);
+            cmbDiaSemana.TabIndex = 0;
+            cmbDiaSemana.SelectedIndexChanged += AplicarFiltros;
+            // 
+            // grpLivroEntregue
+            // 
+            grpLivroEntregue.Controls.Add(rdbNao);
+            grpLivroEntregue.Controls.Add(rdbSim);
+            grpLivroEntregue.Controls.Add(rdbTodos);
+            grpLivroEntregue.Location = new Point(238, 12);
+            grpLivroEntregue.Name = "grpLivroEntregue";
+            grpLivroEntregue.Size = new Size(200, 60);
+            grpLivroEntregue.TabIndex = 7;
+            grpLivroEntregue.TabStop = false;
+            grpLivroEntregue.Text = "Livro Entregue";
+            // 
+            // rdbNao
+            // 
+            rdbNao.AutoSize = true;
+            rdbNao.Location = new Point(125, 25);
+            rdbNao.Name = "rdbNao";
+            rdbNao.Size = new Size(51, 21);
+            rdbNao.TabIndex = 2;
+            rdbNao.Text = "Não";
+            rdbNao.UseVisualStyleBackColor = true;
+            rdbNao.CheckedChanged += AplicarFiltros;
+            // 
+            // rdbSim
+            // 
+            rdbSim.AutoSize = true;
+            rdbSim.Location = new Point(72, 25);
+            rdbSim.Name = "rdbSim";
+            rdbSim.Size = new Size(47, 21);
+            rdbSim.TabIndex = 1;
+            rdbSim.Text = "Sim";
+            rdbSim.UseVisualStyleBackColor = true;
+            rdbSim.CheckedChanged += AplicarFiltros;
+            // 
+            // rdbTodos
+            // 
+            rdbTodos.AutoSize = true;
+            rdbTodos.Checked = true;
+            rdbTodos.Location = new Point(6, 25);
+            rdbTodos.Name = "rdbTodos";
+            rdbTodos.Size = new Size(60, 21);
+            rdbTodos.TabIndex = 0;
+            rdbTodos.TabStop = true;
+            rdbTodos.Text = "Todos";
+            rdbTodos.UseVisualStyleBackColor = true;
+            rdbTodos.CheckedChanged += AplicarFiltros;
+            // 
+            // grpAluno
+            // 
+            grpAluno.Controls.Add(cmbPesquisaAluno);
+            grpAluno.Location = new Point(12, 12);
+            grpAluno.Name = "grpAluno";
+            grpAluno.Size = new Size(220, 60);
+            grpAluno.TabIndex = 6;
+            grpAluno.TabStop = false;
+            grpAluno.Text = "Aluno";
+            // 
+            // cmbPesquisaAluno
+            // 
+            cmbPesquisaAluno.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmbPesquisaAluno.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cmbPesquisaAluno.FormattingEnabled = true;
+            cmbPesquisaAluno.Location = new Point(6, 22);
+            cmbPesquisaAluno.Name = "cmbPesquisaAluno";
+            cmbPesquisaAluno.Size = new Size(208, 25);
+            cmbPesquisaAluno.TabIndex = 0;
+            cmbPesquisaAluno.TextChanged += AplicarFiltros;
+            // 
+            // btnConfirmarImportacao
+            // 
+            btnConfirmarImportacao.Location = new Point(914, 78);
+            btnConfirmarImportacao.Name = "btnConfirmarImportacao";
+            btnConfirmarImportacao.Size = new Size(75, 27);
+            btnConfirmarImportacao.TabIndex = 5;
+            btnConfirmarImportacao.Text = "Salvar";
+            btnConfirmarImportacao.UseVisualStyleBackColor = true;
+            btnConfirmarImportacao.Click += btnConfirmarImportacao_Click;
+            // 
+            // btnFiltros
+            // 
+            btnFiltros.Location = new Point(12, 78);
+            btnFiltros.Name = "btnFiltros";
+            btnFiltros.Size = new Size(110, 27);
+            btnFiltros.TabIndex = 4;
+            btnFiltros.Text = "Ocultar Filtros";
+            btnFiltros.UseVisualStyleBackColor = true;
+            btnFiltros.Click += btnFiltros_Click;
+            // 
+            // panelGrid
+            // 
+            panelGrid.Controls.Add(dgvEntregas);
+            panelGrid.Dock = DockStyle.Fill;
+            panelGrid.Location = new Point(0, 117);
+            panelGrid.Name = "panelGrid";
+            panelGrid.Size = new Size(1001, 358);
+            panelGrid.TabIndex = 4;
+            // 
+            // panelRodape
+            // 
+            panelRodape.Dock = DockStyle.Bottom;
+            panelRodape.Location = new Point(0, 475);
+            panelRodape.Name = "panelRodape";
+            panelRodape.Size = new Size(1001, 36);
+            panelRodape.TabIndex = 5;
+            // 
+            // FrmEntregaLivros
+            // 
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1001, 511);
+            Controls.Add(panelGrid);
+            Controls.Add(panelCabecalho);
+            Controls.Add(panelRodape);
+            Font = new Font("Century Gothic", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            Name = "FrmEntregaLivros";
+            Text = "Entrega de Livros";
+            Load += EntregaLivros_Load;
+            ((System.ComponentModel.ISupportInitialize)dgvEntregas).EndInit();
+            panelCabecalho.ResumeLayout(false);
+            grpDiaSemana.ResumeLayout(false);
+            grpLivroEntregue.ResumeLayout(false);
+            grpLivroEntregue.PerformLayout();
+            grpAluno.ResumeLayout(false);
+            panelGrid.ResumeLayout(false);
+            ResumeLayout(false);
+        }
+
+        #endregion
+
+        private DataGridView dgvEntregas;
+        private Button btnImportar;
+        private Panel panelCabecalho;
+        private Panel panelGrid;
+        private Panel panelRodape;
+        private Button btnFiltros;
+        private Button btnConfirmarImportacao;
+        private GroupBox grpAluno;
+        private ComboBox cmbPesquisaAluno;
+        private GroupBox grpLivroEntregue;
+        private RadioButton rdbTodos;
+        private RadioButton rdbSim;
+        private RadioButton rdbNao;
+        private GroupBox grpDiaSemana;
+        private ComboBox cmbDiaSemana;
+    }
+}

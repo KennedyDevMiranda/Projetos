@@ -1,0 +1,237 @@
+﻿//using Microsoft.Data.Sqlite;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
+using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
+
+namespace Central_do_Educador.Data
+{
+    public static class Db
+    {
+        // String de conexão para o arquivo do banco "central"
+        ///public static string DbPath { get; } = @"Data Source=""\\100.76.153.63\Umbrel_Arquivos\SSD - 220GB\central.db""";
+        public static string DbPath { get; } = @"Data Source=""\\SUPORTE\dados\central.db""";
+        public static string ConnectionString => DbPath;
+
+        public static async Task InitializeAsync()
+        {
+            // Em SQLite usamos arquivo local; garantir tabelas existentes.
+            await CreateTablesIfNotExistsAsync();
+        }
+
+        public static async Task<SqliteConnection> OpenConnectionAsync()
+        {
+            var con = new SqliteConnection(ConnectionString);
+            try
+            {
+                await con.OpenAsync();
+
+                // Ativar verificação de chaves estrangeiras
+                using var cmd = con.CreateCommand();
+                cmd.CommandText = "PRAGMA foreign_keys = ON;";
+                await cmd.ExecuteNonQueryAsync();
+            }
+            catch (SqliteException)
+            {
+                // Log mex.Message, mex.SqliteErrorCode, mex.InnerException?.Message, mex.StackTrace
+                throw;
+            }
+            catch (OperationCanceledException)
+            {
+                // Log cancellation reason (likely connect timeout)
+                throw;
+            }
+            catch (Exception)
+            {
+                // Generic log
+                throw;
+            }
+            return con;
+        }
+
+        public static SqliteParameter P(string name, object? value)
+            => new SqliteParameter(name, value ?? DBNull.Value);
+
+        public static async Task<int> ExecuteNonQueryAsync(
+            string sql,
+            IEnumerable<SqliteParameter>? parameters = null,
+            SqliteTransaction? tx = null)
+        {
+            if (string.IsNullOrWhiteSpace(sql))
+                throw new ArgumentException("SQL não pode ser vazio.", nameof(sql));
+
+            if (tx != null)
+            {
+                using var cmd = tx.Connection!.CreateCommand();
+                cmd.Transaction = tx;
+                cmd.CommandText = sql;
+                AddParameters(cmd, parameters);
+                return await cmd.ExecuteNonQueryAsync();
+            }
+
+            using var con = await OpenConnectionAsync();
+            using var cmd2 = con.CreateCommand();
+            cmd2.CommandText = sql;
+            AddParameters(cmd2, parameters);
+            return await cmd2.ExecuteNonQueryAsync();
+        }
+
+        public static async Task<T?> ExecuteScalarAsync<T>(
+            string sql,
+            IEnumerable<SqliteParameter>? parameters = null,
+            SqliteTransaction? tx = null)
+        {
+            if (string.IsNullOrWhiteSpace(sql))
+                throw new ArgumentException("SQL não pode ser vazio.", nameof(sql));
+
+            object? result;
+
+            if (tx != null)
+            {
+                using var cmd = tx.Connection!.CreateCommand();
+                cmd.Transaction = tx;
+                cmd.CommandText = sql;
+                AddParameters(cmd, parameters);
+                result = await cmd.ExecuteScalarAsync();
+            }
+            else
+            {
+                using var con = await OpenConnectionAsync();
+                using var cmd2 = con.CreateCommand();
+                cmd2.CommandText = sql;
+                AddParameters(cmd2, parameters);
+                result = await cmd2.ExecuteScalarAsync();
+            }
+
+            if (result == null || result == DBNull.Value)
+                return default;
+
+            return (T)Convert.ChangeType(result, typeof(T), CultureInfo.InvariantCulture);
+        }
+
+        public static async Task<DataTable> QueryDataTableAsync(
+            string sql,
+            IEnumerable<SqliteParameter>? parameters = null,
+            SqliteTransaction? tx = null)
+        {
+            if (string.IsNullOrWhiteSpace(sql))
+                throw new ArgumentException("SQL não pode ser vazio.", nameof(sql));
+
+            var dt = new DataTable();
+
+            if (tx != null)
+            {
+                using var cmd = tx.Connection!.CreateCommand();
+                cmd.Transaction = tx;
+                cmd.CommandText = sql;
+                AddParameters(cmd, parameters);
+
+                using var reader = await cmd.ExecuteReaderAsync();
+                dt.Load(reader);
+                return dt;
+            }
+
+            using var con = await OpenConnectionAsync();
+            using var cmd2 = con.CreateCommand();
+            cmd2.CommandText = sql;
+            AddParameters(cmd2, parameters);
+
+            using var reader2 = await cmd2.ExecuteReaderAsync();
+            dt.Load(reader2);
+            return dt;
+        }
+
+        public static async Task ExecuteInTransactionAsync(Func<SqliteTransaction, Task> action)
+        {
+            using var con = await OpenConnectionAsync();
+            using var tx = con.BeginTransaction(); // BeginTransaction sync no Sqlite
+
+            try
+            {
+                await action(tx);
+                tx.Commit();
+            }
+            catch
+            {
+                try { tx.Rollback(); } catch { }
+                throw;
+            }
+        }
+
+        private static void AddParameters(SqliteCommand cmd, IEnumerable<SqliteParameter>? parameters)
+        {
+            if (parameters == null) return;
+            foreach (var p in parameters)
+                cmd.Parameters.Add(p);
+        }
+
+        private static async Task CreateTablesIfNotExistsAsync()
+        {
+            var sqlAlunos = @"
+                CREATE TABLE IF NOT EXISTS alunos (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nome TEXT NOT NULL,
+                    email TEXT,
+                    numero_aluno TEXT,
+                    numero_responsavel TEXT,
+                    ativo INTEGER NOT NULL DEFAULT 1
+                );";
+
+            // Criar reposicao com colunas compatíveis com FrmControleTaxa (mantendo também colunas id-referência para compatibilidade)
+            var sqlReposicao = @"
+                CREATE TABLE IF NOT EXISTS reposicao (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    aluno TEXT,
+                    aluno_id INTEGER,
+                    UsuarioResponsavel TEXT,
+                    usuario_id INTEGER,
+                    data_falta TEXT NOT NULL,
+                    data_registro TEXT NOT NULL,
+                    Data_Reposicao TEXT NULL,
+                    quantidade INTEGER NOT NULL DEFAULT 1,
+                    lancado INTEGER NOT NULL DEFAULT 0,
+                    Historico INTEGER NOT NULL DEFAULT 0,
+                    Observacao TEXT,
+                    valor_total NUMERIC NOT NULL DEFAULT 0,
+                    FOREIGN KEY (aluno_id) REFERENCES alunos(id),
+                    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+                );";
+
+            await ExecuteNonQueryAsync(sqlAlunos);
+            await ExecuteNonQueryAsync(sqlReposicao);
+
+            // Garantir compatibilidade em bases antigas: adicionar colunas que podem faltar
+            using var con = await OpenConnectionAsync();
+            using var cmd = con.CreateCommand();
+            cmd.CommandText = "PRAGMA table_info('reposicao');";
+            using var reader = await cmd.ExecuteReaderAsync();
+
+            var existing = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            while (await reader.ReadAsync())
+            {
+                var nameObj = reader["name"];
+                if (nameObj != null)
+                    existing.Add(nameObj.ToString()!);
+            }
+
+            // Lista de colunas opcionais a adicionar se ausentes
+            var addStatements = new List<string>();
+            if (!existing.Contains("aluno")) addStatements.Add("ALTER TABLE reposicao ADD COLUMN aluno TEXT;");
+            if (!existing.Contains("aluno_id")) addStatements.Add("ALTER TABLE reposicao ADD COLUMN aluno_id INTEGER;");
+            if (!existing.Contains("UsuarioResponsavel")) addStatements.Add("ALTER TABLE reposicao ADD COLUMN UsuarioResponsavel TEXT;");
+            if (!existing.Contains("usuario_id")) addStatements.Add("ALTER TABLE reposicao ADD COLUMN usuario_id INTEGER;");
+            if (!existing.Contains("Data_Reposicao")) addStatements.Add("ALTER TABLE reposicao ADD COLUMN Data_Reposicao TEXT;");
+            if (!existing.Contains("Observacao")) addStatements.Add("ALTER TABLE reposicao ADD COLUMN Observacao TEXT;");
+            if (!existing.Contains("valor_total")) addStatements.Add("ALTER TABLE reposicao ADD COLUMN valor_total NUMERIC NOT NULL DEFAULT 0;");
+
+            foreach (var s in addStatements)
+            {
+                using var c2 = con.CreateCommand();
+                c2.CommandText = s;
+                await c2.ExecuteNonQueryAsync();
+            }
+        }
+    }
+}
