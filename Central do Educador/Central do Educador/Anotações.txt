@@ -1,0 +1,30 @@
+String Banco
+
+//public static string DbPath { get; } = @"\\192.168.1.100\ssd_240gb\dados\central.db";
+//public static string DbPath { get; } = @A:\HD_500GB\Banco de Dados\;
+//public static string DbPath { get; } = @"Data Source=""\\SUPORTE\dados\central.db""";
+//public static string DbPath { get; } = @"Data Source=""C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\central.db""";
+
+#	Funcionalidade	Complexidade
+1	Grid de agendamentos com filtros (aluno, status, tipo, data)	🟢 Fácil
+2	Formulário de novo agendamento (ComboBox aluno, tipo, data/hora, local)	🟢 Fácil
+3	Alterar status (Pendente → Confirmado → Concluído / Cancelado)	🟢 Fácil
+4	Gerar notificação ao salvar/confirmar (monta mensagem usando template + placeholders)	🟡 Médio
+5	Envio por e-mail (SMTP com MailKit ou System.Net.Mail)	🟡 Médio
+6	Envio por WhatsApp (API Evolution/Z-API ou link wa.me)	🟠 Requer API externa
+7	Tela de templates (CRUD para personalizar mensagens)	🟢 Fácil
+
+📋 Plano de Adaptação
+Posso fazer as seguintes mudanças:
+1.	Remover todo OleDb → usar a classe Db com SQLite async
+2.	BuscarDadosNoAccess(string) → consultar tabela alunos com colunas corretas
+3.	SalvarLogNoAccess(string, string, string, string, string, string, string) → gravar em notificacoes + notificacao_destinatarios (ou criar uma tabela historico_envio_chatbot se preferir manter separado)
+4.	EnviarEmail(string, string, string) → ler config da tabela configuracao_email em vez de arquivo .txt
+5.	VerificarOperador() → decidir como identificar o operador (criar controle simples ou remover?)
+6.	Limpar imports não usados (System.Data.OleDb etc.)
+---
+
+Antes de gerar o código, preciso que me diga:
+1.	Operador/Identificação: quer manter a lógica de pedir o nome do operador (posso criar um InputBox simples), remover isso, ou você já tem outro controle de usuário?
+2.	Log de envio: prefere gravar nas tabelas notificacoes/notificacao_destinatarios já existentes, ou criar uma tabela nova historico_envio_chatbot separada?
+3.	Algo mais que queira alterar na lógica (ex.: remover envio de e-mail, alterar fluxo do QR Code, etc.)?

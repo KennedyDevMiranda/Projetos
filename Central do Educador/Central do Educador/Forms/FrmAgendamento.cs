@@ -1,0 +1,1118 @@
+﻿using Central_do_Educador.Data;
+using Central_do_Educador.Services;
+using Microsoft.Data.Sqlite;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Central_do_Educador.Forms
+{
+    public partial class FrmAgendamento : Form
+    {
+        private bool _loaded = false;
+        private int _idEmEdicao = 0; // 0 = novo | >0 = edição
+
+        // Mapeia nome do aluno → id
+        private readonly Dictionary<string, int> _alunoMap = new(StringComparer.OrdinalIgnoreCase);
+
+        // ── WhatsApp via manager compartilhado ──
+        private FrmQRCode _janelaLogin;
+        private readonly Random _rnd = new();
+
+        public FrmAgendamento()
+        {
+            InitializeComponent();
+
+            cmbFiltroStatus.SelectedIndex = 0;
+            cmbFiltroTipo.SelectedIndex = 0;
+            cmbTipo.SelectedIndex = 0;
+
+            this.FormClosing += FrmAgendamento_FormClosing;
+        }
+
+        private async void FrmAgendamento_Load(object sender, EventArgs e)
+        {
+            await CarregarAlunosNoComboAsync();
+            _loaded = true;
+            await AtualizarGridAsync();
+
+            // Inscreve-se nos eventos do manager
+            WhatsAppDriverManager.OnConectado += WppManager_OnConectado;
+            WhatsAppDriverManager.OnDesconectado += WppManager_OnDesconectado;
+            WhatsAppDriverManager.OnQRCodeDisponivel += WppManager_OnQRCode;
+
+            // Se já está conectado (abriu outro form antes), atualiza a UI imediatamente
+            if (WhatsAppDriverManager.Conectado)
+            {
+                toolTip1.SetToolTip(ptbViaWhatsApp, "✅ WhatsApp Conectado — Clique para enviar");
+                ptbViaWhatsApp.Enabled = true;
+            }
+            else
+            {
+                // Inicia conexão em background (vai reconectar rápido se a sessão existir)
+                _ = Task.Run(() => WhatsAppDriverManager.IniciarAsync(exibirQR: false));
+            }
+        }
+
+        // ── Callbacks do WhatsAppDriverManager ──
+
+        private void WppManager_OnConectado()
+        {
+            if (IsDisposed || !IsHandleCreated) return;
+            this.Invoke((MethodInvoker)delegate
+            {
+                if (_janelaLogin != null) { _janelaLogin.FecharLogin(); _janelaLogin = null; }
+                toolTip1.SetToolTip(ptbViaWhatsApp, "✅ WhatsApp Conectado — Clique para enviar");
+                ptbViaWhatsApp.Enabled = true;
+            });
+        }
+
+        private void WppManager_OnDesconectado()
+        {
+            if (IsDisposed || !IsHandleCreated) return;
+            this.Invoke((MethodInvoker)delegate
+            {
+                toolTip1.SetToolTip(ptbViaWhatsApp, "❌ Desconectado — Clique para conectar ao WhatsApp");
+                ptbViaWhatsApp.Enabled = true;
+            });
+        }
+
+        private void WppManager_OnQRCode(Image imgQR)
+        {
+            if (IsDisposed || !IsHandleCreated) return;
+            this.Invoke((MethodInvoker)delegate
+            {
+                if (_janelaLogin == null || _janelaLogin.IsDisposed)
+                {
+                    _janelaLogin = new FrmQRCode();
+                    _janelaLogin.Show();
+                }
+                _janelaLogin.AtualizarQR(imgQR);
+                toolTip1.SetToolTip(ptbViaWhatsApp, "⏳ Aguardando leitura do QR Code...");
+            });
+        }
+
+        // ══════════════════════════════════════════════
+        //  CARREGAR ALUNOS NO COMBOBOX
+        // ══════════════════════════════════════════════
+
+        private async Task CarregarAlunosNoComboAsync()
+        {
+            _alunoMap.Clear();
+            cmbAluno.Items.Clear();
+
+            try
+            {
+                using var conn = new SqliteConnection(Db.ConnectionString);
+                await conn.OpenAsync();
+
+                using var cmd = new SqliteCommand(
+                    "SELECT id, nome FROM alunos WHERE ativo = 1 ORDER BY nome;", conn);
+                using var reader = await cmd.ExecuteReaderAsync();
+
+                while (await reader.ReadAsync())
+                {
+                    int id = reader.GetInt32(0);
+                    string nome = reader.GetString(1);
+
+                    _alunoMap[nome] = id;
+                    cmbAluno.Items.Add(nome);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao carregar alunos: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ══════════════════════════════════════════════
+        //  FILTROS
+        // ══════════════════════════════════════════════
+
+        private async void FiltroChanged(object sender, EventArgs e)
+        {
+            if (!_loaded) return;
+            await AtualizarGridAsync();
+        }
+
+        // ══════════════════════════════════════════════
+        //  CARREGAR GRID
+        // ══════════════════════════════════════════════
+
+        private async Task AtualizarGridAsync()
+        {
+            if (!_loaded) return;
+
+            string filtroAluno = (txtFiltroAluno?.Text ?? string.Empty).Trim();
+            string filtroStatus = cmbFiltroStatus?.SelectedItem?.ToString() ?? "Todos";
+            string filtroTipo = cmbFiltroTipo?.SelectedItem?.ToString() ?? "Todos";
+            bool usarFiltroData = dtpFiltroData?.ShowCheckBox == true && dtpFiltroData.Checked;
+            string filtroData = usarFiltroData ? dtpFiltroData?.Value.Date.ToString("yyyy-MM-dd") : null;
+
+            try
+            {
+                using var conn = new SqliteConnection(Db.ConnectionString);
+                await conn.OpenAsync();
+
+                string sql = @"
+                    SELECT
+                        ag.id           AS Id,
+                        a.nome          AS Aluno,
+                        ag.data_hora    AS DataHora,
+                        ag.tipo         AS Tipo,
+                        ag.local        AS Local,
+                        ag.observacao   AS Observacao,
+                        ag.status       AS Status,
+                        ag.criado_em    AS CriadoEm
+                    FROM agendamentos ag
+                    INNER JOIN alunos a ON a.id = ag.aluno_id
+                    WHERE 1=1";
+
+                if (!string.IsNullOrWhiteSpace(filtroAluno))
+                    sql += " AND a.nome LIKE @aluno ESCAPE '\\'";
+
+                if (filtroStatus != "Todos")
+                    sql += " AND ag.status = @status";
+
+                if (filtroTipo != "Todos")
+                    sql += " AND ag.tipo = @tipo";
+
+                if (filtroData != null)
+                    sql += " AND SUBSTR(ag.data_hora, 1, 10) = @data";
+
+                sql += " ORDER BY ag.data_hora DESC, a.nome ASC;";
+
+                using var cmd = new SqliteCommand(sql, conn);
+
+                if (!string.IsNullOrWhiteSpace(filtroAluno))
+                {
+                    string escapado = filtroAluno.Replace("\\", "\\\\").Replace("%", "\\%").Replace("_", "\\_");
+                    cmd.Parameters.AddWithValue("@aluno", $"%{escapado}%");
+                }
+
+                if (filtroStatus != "Todos")
+                    cmd.Parameters.AddWithValue("@status", filtroStatus);
+
+                if (filtroTipo != "Todos")
+                    cmd.Parameters.AddWithValue("@tipo", filtroTipo);
+
+                if (filtroData != null)
+                    cmd.Parameters.AddWithValue("@data", filtroData);
+
+                var dt = new DataTable();
+                using (var reader = await cmd.ExecuteReaderAsync())
+                {
+                    dt.Load(reader);
+                }
+
+                dgvAgendamentos.DataSource = dt;
+
+                lblTotal.Text = $"Total de agendamentos: {dt.Rows.Count}";
+
+                if (dt.Rows.Count > 0)
+                    FormatarGrid();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao carregar agendamentos: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ══════════════════════════════════════════════
+        //  SALVAR (Novo + Edição) — somente banco + grid
+        // ══════════════════════════════════════════════
+
+        private async void ptbSalvar_Click(object? sender, EventArgs e)
+        {
+            string nomeAluno = (cmbAluno.Text ?? "").Trim();
+            if (string.IsNullOrWhiteSpace(nomeAluno))
+            {
+                MessageBox.Show("Selecione um aluno.", "Atenção",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbAluno.Focus();
+                return;
+            }
+
+            if (!_alunoMap.TryGetValue(nomeAluno, out int alunoId))
+            {
+                MessageBox.Show("Aluno não encontrado na lista. Selecione um aluno válido.", "Atenção",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbAluno.Focus();
+                return;
+            }
+
+            if (cmbTipo.SelectedIndex < 0)
+            {
+                MessageBox.Show("Selecione o tipo do agendamento.", "Atenção",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbTipo.Focus();
+                return;
+            }
+
+            string dataHora = dtpDataHora.Value.ToString("yyyy-MM-dd HH:mm:ss");
+            string tipo = cmbTipo.SelectedItem?.ToString() ?? "";
+            string local = txtLocal.Text.Trim();
+            string observacao = txtObservacao.Text.Trim();
+
+            try
+            {
+                using var conn = new SqliteConnection(Db.ConnectionString);
+                await conn.OpenAsync();
+
+                if (_idEmEdicao > 0)
+                {
+                    string novoStatus = cmbStatus.SelectedItem?.ToString() ?? "PENDENTE";
+
+                    const string sqlUpdate = @"
+                        UPDATE agendamentos
+                        SET aluno_id      = @aluno_id,
+                            data_hora     = @data_hora,
+                            tipo          = @tipo,
+                            local         = @local,
+                            observacao    = @observacao,
+                            status        = @status,
+                            atualizado_em = datetime('now','localtime')
+                        WHERE id = @id;";
+
+                    using var cmd = new SqliteCommand(sqlUpdate, conn);
+                    cmd.Parameters.AddWithValue("@id", _idEmEdicao);
+                    cmd.Parameters.AddWithValue("@aluno_id", alunoId);
+                    cmd.Parameters.AddWithValue("@data_hora", dataHora);
+                    cmd.Parameters.AddWithValue("@tipo", tipo);
+                    cmd.Parameters.AddWithValue("@local", string.IsNullOrWhiteSpace(local) ? DBNull.Value : local);
+                    cmd.Parameters.AddWithValue("@observacao", string.IsNullOrWhiteSpace(observacao) ? DBNull.Value : observacao);
+                    cmd.Parameters.AddWithValue("@status", novoStatus);
+                    await cmd.ExecuteNonQueryAsync();
+
+                    MessageBox.Show("Agendamento atualizado!", "OK",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    const string sqlInsert = @"
+                        INSERT INTO agendamentos (aluno_id, data_hora, tipo, local, observacao, status, criado_em)
+                        VALUES (@aluno_id, @data_hora, @tipo, @local, @observacao, 'PENDENTE', datetime('now','localtime'));
+                        SELECT last_insert_rowid();";
+
+                    using var cmd = new SqliteCommand(sqlInsert, conn);
+                    cmd.Parameters.AddWithValue("@aluno_id", alunoId);
+                    cmd.Parameters.AddWithValue("@data_hora", dataHora);
+                    cmd.Parameters.AddWithValue("@tipo", tipo);
+                    cmd.Parameters.AddWithValue("@local", string.IsNullOrWhiteSpace(local) ? DBNull.Value : local);
+                    cmd.Parameters.AddWithValue("@observacao", string.IsNullOrWhiteSpace(observacao) ? DBNull.Value : observacao);
+
+                    long novoId = (long)(await cmd.ExecuteScalarAsync())!;
+
+                    MessageBox.Show($"Agendamento #{novoId} criado!", "OK",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+                LimparFormulario();
+                await AtualizarGridAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao salvar: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ══════════════════════════════════════════════
+        //  DUPLO CLIQUE → carregar no formulário
+        // ══════════════════════════════════════════════
+
+        private void dgvAgendamentos_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            var row = dgvAgendamentos.Rows[e.RowIndex];
+
+            var idObj = row.Cells["Id"]?.Value;
+            if (idObj == null || !int.TryParse(idObj.ToString(), out int id) || id <= 0) return;
+
+            _idEmEdicao = id;
+
+            string aluno = row.Cells["Aluno"]?.Value?.ToString() ?? "";
+            string dataHoraStr = row.Cells["DataHora"]?.Value?.ToString() ?? "";
+            string tipo = row.Cells["Tipo"]?.Value?.ToString() ?? "";
+            string local = row.Cells["Local"]?.Value?.ToString() ?? "";
+            string obs = row.Cells["Observacao"]?.Value?.ToString() ?? "";
+            string status = row.Cells["Status"]?.Value?.ToString() ?? "PENDENTE";
+
+            cmbAluno.Text = aluno;
+
+            if (DateTime.TryParse(dataHoraStr, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))
+                dtpDataHora.Value = dt;
+
+            for (int i = 0; i < cmbTipo?.Items.Count; i++)
+            {
+                if (string.Equals(cmbTipo?.Items?[i]?.ToString(), tipo, StringComparison.OrdinalIgnoreCase))
+                { cmbTipo.SelectedIndex = i; break; }
+            }
+
+            txtLocal.Text = local;
+            txtObservacao.Text = obs;
+
+            lblStatus.Visible = true;
+            cmbStatus.Visible = true;
+            for (int i = 0; i < cmbStatus.Items.Count; i++)
+            {
+                if (string.Equals(cmbStatus.Items[i].ToString(), status, StringComparison.OrdinalIgnoreCase))
+                { cmbStatus.SelectedIndex = i; break; }
+            }
+
+            Text = $"Agendamento — Editando #{id}";
+            cmbAluno.Focus();
+        }
+
+        // ══════════════════════════════════════════════
+        //  CLIQUE DIREITO → seleciona a linha
+        // ══════════════════════════════════════════════
+
+        private void dgvAgendamentos_MouseDown(object? sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+
+            var hit = dgvAgendamentos.HitTest(e.X, e.Y);
+            if (hit.RowIndex < 0) return;
+
+            dgvAgendamentos.ClearSelection();
+            dgvAgendamentos.Rows[hit.RowIndex].Selected = true;
+            dgvAgendamentos.CurrentCell = dgvAgendamentos.Rows[hit.RowIndex].Cells[0];
+        }
+
+        // ══════════════════════════════════════════════
+        //  CONTEXT MENU → ALTERAR STATUS RÁPIDO
+        // ══════════════════════════════════════════════
+
+        private async void tsmiConfirmar_Click(object sender, EventArgs e) => await AlterarStatusAsync("CONFIRMADO");
+        private async void tsmiCancelar_Click(object sender, EventArgs e) => await AlterarStatusAsync("CANCELADO");
+        private async void tsmiRemarcar_Click(object sender, EventArgs e) => await AlterarStatusAsync("REMARCADO");
+        private async void tsmiConcluir_Click(object sender, EventArgs e) => await AlterarStatusAsync("CONCLUIDO");
+        private async void tsmiPendente_Click(object sender, EventArgs e) => await AlterarStatusAsync("PENDENTE");
+
+        private async Task AlterarStatusAsync(string novoStatus)
+        {
+            if (dgvAgendamentos.CurrentRow == null) return;
+
+            var idObj = dgvAgendamentos.CurrentRow.Cells["Id"]?.Value;
+            if (idObj == null || !int.TryParse(idObj.ToString(), out int id) || id <= 0) return;
+
+            string statusAtual = dgvAgendamentos.CurrentRow.Cells["Status"]?.Value?.ToString()?.Trim().ToUpper() ?? "";
+            string aluno = dgvAgendamentos.CurrentRow.Cells["Aluno"]?.Value?.ToString() ?? "";
+
+            if (statusAtual == novoStatus.ToUpper())
+            {
+                MessageBox.Show($"O agendamento já está como '{novoStatus}'.",
+                    "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var resp = MessageBox.Show(
+                $"Alterar status de '{aluno}' para {novoStatus}?",
+                "Confirmar alteração",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (resp != DialogResult.Yes) return;
+
+            try
+            {
+                using var conn = new SqliteConnection(Db.ConnectionString);
+                await conn.OpenAsync();
+
+                const string sql = @"
+                    UPDATE agendamentos
+                    SET status        = @status,
+                        atualizado_em = datetime('now','localtime')
+                    WHERE id = @id;";
+
+                using var cmd = new SqliteCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@status", novoStatus);
+                await cmd.ExecuteNonQueryAsync();
+
+                string msgExtra = await GerarEEnviarNotificacoesAsync(id, novoStatus);
+
+                MessageBox.Show(
+                    $"Status alterado para '{novoStatus}'.{msgExtra}",
+                    "OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                await AtualizarGridAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao alterar status: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ══════════════════════════════════════════════
+        //  GERAR NOTIFICAÇÃO + ENVIAR (usado pelo context menu)
+        // ══════════════════════════════════════════════
+
+        private static async Task<string> GerarEEnviarNotificacoesAsync(int agendamentoId, string novoStatus)
+        {
+            int notifs = await NotificacaoService.GerarNotificacoesAsync(agendamentoId, novoStatus);
+            if (notifs == 0) return "";
+
+            string msg = $"\n📩 {notifs} notificação(ões) gerada(s).";
+
+            var (emailEnviados, emailFalhas) = await EmailService.ProcessarPendentesAsync();
+            if (emailEnviados > 0) msg += $"\n✅ {emailEnviados} e-mail(s) enviado(s).";
+            if (emailFalhas > 0) msg += $"\n⚠️ {emailFalhas} e-mail(s) com falha.";
+
+            var (wppEnviados, wppFalhas, wppLinks) = await WhatsAppService.ProcessarPendentesAsync();
+            if (wppEnviados > 0) msg += $"\n✅ {wppEnviados} WhatsApp(s) enviado(s) via API.";
+            if (wppLinks > 0) msg += $"\n🔗 {wppLinks} link(s) wa.me aberto(s) no navegador.";
+            if (wppFalhas > 0) msg += $"\n⚠️ {wppFalhas} WhatsApp(s) com falha.";
+
+            if (emailEnviados == 0 && emailFalhas == 0 && wppEnviados == 0 && wppLinks == 0 && wppFalhas == 0)
+                msg += "\n📧 Nenhum envio realizado (verifique as configurações de E-mail e WhatsApp).";
+
+            return msg;
+        }
+
+        // ══════════════════════════════════════════════════════════════
+        //  WHATSAPP VIA SELENIUM — usa o WhatsAppDriverManager
+        // ══════════════════════════════════════════════════════════════
+
+        private async void ptbViaWhatsApp_Click(object sender, EventArgs e)
+        {
+            if (WhatsAppDriverManager.Conectado)
+            {
+                await EnviarWhatsAppDoAgendamentoAsync();
+            }
+            else
+            {
+                // Não conectado → exibe QR Code e tenta conectar
+                _ = Task.Run(() => WhatsAppDriverManager.IniciarAsync(exibirQR: true));
+            }
+        }
+
+        /// <summary>
+        /// Envia WhatsApp para aluno/responsável do agendamento selecionado via Selenium.
+        /// </summary>
+        private async Task EnviarWhatsAppDoAgendamentoAsync()
+        {
+            try
+            {
+                if (!WhatsAppDriverManager.Conectado)
+                {
+                    MessageBox.Show("WhatsApp não conectado. Clique no ícone do WhatsApp para conectar.",
+                        "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (dgvAgendamentos.CurrentRow == null)
+                {
+                    MessageBox.Show("Selecione um agendamento na grade.", "Atenção",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var idObj = dgvAgendamentos.CurrentRow.Cells["Id"]?.Value;
+                if (idObj == null || !int.TryParse(idObj.ToString(), out int id) || id <= 0)
+                {
+                    MessageBox.Show("Não foi possível identificar o agendamento.", "Erro",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string alunoNome = dgvAgendamentos.CurrentRow.Cells["Aluno"]?.Value?.ToString() ?? "";
+                string status = dgvAgendamentos.CurrentRow.Cells["Status"]?.Value?.ToString() ?? "PENDENTE";
+
+                // 2. Buscar dados do aluno
+                var dados = await BuscarDadosAlunoDoAgendamentoAsync(id);
+                if (dados == null)
+                {
+                    MessageBox.Show("Dados do aluno não encontrados.", "Erro",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(dados.TelAluno) && string.IsNullOrWhiteSpace(dados.TelResp))
+                {
+                    MessageBox.Show("Nenhum telefone cadastrado para este aluno/responsável.",
+                        "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // 3. Montar mensagem via template ou padrão
+                string mensagem = await MontarMensagemAsync(id, alunoNome, status);
+
+                if (string.IsNullOrWhiteSpace(mensagem))
+                {
+                    MessageBox.Show("Não foi possível montar a mensagem para envio.",
+                        "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // ── Verificar se os números são iguais ──
+                string? telAlunoNorm = NormalizarNumero(dados.TelAluno);
+                string? telRespNorm = NormalizarNumero(dados.TelResp);
+                bool numerosDuplicados = !string.IsNullOrEmpty(telAlunoNorm)
+                                      && !string.IsNullOrEmpty(telRespNorm)
+                                      && telAlunoNorm == telRespNorm;
+
+                // Ajustar texto de confirmação
+                string destinatarioTexto = numerosDuplicados
+                    ? $"'{alunoNome}' (Responsável — mesmo número do aluno: {dados.TelResp})"
+                    : $"'{alunoNome}'";
+
+                // 4. Confirmar com o usuário
+                var resp = MessageBox.Show(
+                    $"Enviar WhatsApp para {destinatarioTexto}?\n\n── Mensagem ──\n{mensagem}",
+                    "Confirmar envio de WhatsApp",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (resp != DialogResult.Yes) return;
+
+                ptbViaWhatsApp.Enabled = false;
+
+                string statusAcumulado = "";
+                string errosAcumulados = "";
+
+                try
+                {
+                    await Task.Run(async () =>
+                    {
+                        if (!WhatsAppDriverManager.Conectado)
+                        {
+                            this.Invoke((MethodInvoker)delegate
+                            {
+                                MessageBox.Show("⚠️ Conexão perdida com o WhatsApp.", "Atenção",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            });
+                            return;
+                        }
+
+                        // Envio para o Aluno — PULAR se número duplicado (prioridade: Responsável)
+                        if (!string.IsNullOrWhiteSpace(dados.TelAluno) && dados.TelAluno != "Sem número" && !numerosDuplicados)
+                        {
+                            try
+                            {
+                                await WhatsAppDriverManager.EnviarMensagemAsync(dados.TelAluno, mensagem);
+                                statusAcumulado += "[Zap Aluno: OK] ";
+                            }
+                            catch (Exception ex)
+                            {
+                                string motivo = ex.Message?.Contains("Timed out") == true
+                                    ? "Tempo esgotado (O número pode não ter WhatsApp / Incorreto.)"
+                                    : ex.Message ?? ex.GetType().Name;
+                                statusAcumulado += "[Zap Aluno: Falhou] ";
+                                errosAcumulados += $"Erro Aluno: {motivo}; ";
+                            }
+                            await Task.Delay(_rnd.Next(1500, 3000));
+                        }
+
+                        // Envio para o Responsável — SEMPRE envia se houver número
+                        if (!string.IsNullOrWhiteSpace(dados.TelResp) && dados.TelResp != "Sem número")
+                        {
+                            try
+                            {
+                                await WhatsAppDriverManager.EnviarMensagemAsync(dados.TelResp, mensagem);
+                                statusAcumulado += numerosDuplicados
+                                    ? "[Zap Resp (Aluno/Resp): OK] "
+                                    : "[Zap Resp: OK] ";
+                            }
+                            catch (Exception ex)
+                            {
+                                string motivo = ex.Message?.Contains("Timed out") == true
+                                    ? "Tempo esgotado (O número pode não ter WhatsApp / Incorreto.)"
+                                    : ex.Message ?? ex.GetType().Name;
+                                statusAcumulado += "[Zap Resp: Falhou] ";
+                                errosAcumulados += $"Erro Resp: {motivo}; ";
+                            }
+                            await Task.Delay(_rnd.Next(1500, 3000));
+                        }
+
+                        // Gravar log
+                        if (!string.IsNullOrWhiteSpace(statusAcumulado))
+                        {
+                            string erroFinal = string.IsNullOrWhiteSpace(errosAcumulados)
+                                ? "Sucesso"
+                                : errosAcumulados.Trim();
+
+                            await SalvarLogEnvioAsync(
+                                alunoNome,
+                                dados.TelAluno ?? "",
+                                dados.TelResp ?? "",
+                                dados.Email ?? "",
+                                mensagem,
+                                statusAcumulado.Trim(),
+                                erroFinal);
+                        }
+                    });
+
+                    string resultado = string.IsNullOrWhiteSpace(errosAcumulados)
+                        ? $"✅ Envio concluído!\n{statusAcumulado.Trim()}"
+                        : $"⚠️ Envio concluído com pendências:\n{statusAcumulado.Trim()}\n{errosAcumulados.Trim()}";
+
+
+                    MessageBox.Show(resultado, "Resultado do Envio",
+                        MessageBoxButtons.OK,
+                        string.IsNullOrWhiteSpace(errosAcumulados)
+                            ? MessageBoxIcon.Information
+                            : MessageBoxIcon.Warning);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erro ao enviar WhatsApp: {ex.Message}", "Erro",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    try
+                    {
+                        if (!IsDisposed && IsHandleCreated)
+                            this.Invoke((MethodInvoker)delegate { ptbViaWhatsApp.Enabled = true; });
+                    }
+                    catch { }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    $"Erro inesperado: {ex.Message}\n\n" +
+                    $"Tipo: {ex.GetType().Name}\n\n" +
+                    $"StackTrace:\n{ex.StackTrace}",
+                    "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ══════════════════════════════════════════════
+        //  FORM CLOSING — NÃO mata o driver (ele é compartilhado)
+        // ══════════════════════════════════════════════
+
+        private void FrmAgendamento_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            // Desinscreve dos eventos para evitar chamadas em form disposed
+            WhatsAppDriverManager.OnConectado -= WppManager_OnConectado;
+            WhatsAppDriverManager.OnDesconectado -= WppManager_OnDesconectado;
+            WhatsAppDriverManager.OnQRCodeDisponivel -= WppManager_OnQRCode;
+        }
+
+        // ══════════════════════════════════════════════
+        //  ENVIAR E-MAIL DO AGENDAMENTO (via EmailService)
+        // ══════════════════════════════════════════════
+
+        private async void ptbConfiguracaoEmail_Click(object sender, EventArgs e)
+        {
+            await EnviarEmailDoAgendamentoAsync();
+        }
+
+        private async Task EnviarEmailDoAgendamentoAsync()
+        {
+            if (dgvAgendamentos.CurrentRow == null)
+            {
+                MessageBox.Show("Selecione um agendamento na grade.", "Atenção",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var idObj = dgvAgendamentos.CurrentRow.Cells["Id"]?.Value;
+            if (idObj == null || !int.TryParse(idObj.ToString(), out int id) || id <= 0)
+            {
+                MessageBox.Show("Não foi possível identificar o agendamento.", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string alunoNome = dgvAgendamentos.CurrentRow.Cells["Aluno"]?.Value?.ToString() ?? "";
+            string status = dgvAgendamentos.CurrentRow.Cells["Status"]?.Value?.ToString() ?? "PENDENTE";
+
+            var dados = await BuscarDadosAlunoDoAgendamentoAsync(id);
+            if (dados == null)
+            {
+                MessageBox.Show("Dados do aluno não encontrados.", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(dados.Email) || !dados.Email.Contains('@'))
+            {
+                MessageBox.Show("E-mail não cadastrado ou inválido para este aluno.",
+                    "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string mensagem = await MontarMensagemAsync(id, alunoNome, status);
+            string assunto = "Central do Educador - Agendamento";
+
+            var previews = await NotificacaoService.GerarPreviewAsync(id, status);
+            var preview = previews.FirstOrDefault(p =>
+                string.Equals(p.Canal, "EMAIL", StringComparison.OrdinalIgnoreCase));
+            if (preview != null && !string.IsNullOrWhiteSpace(preview.Titulo))
+                assunto = preview.Titulo;
+
+            var resp = MessageBox.Show(
+                $"Enviar E-mail para '{alunoNome}' ({dados.Email})?\n\n── Mensagem ──\n{mensagem}",
+                "Confirmar envio de E-mail",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (resp != DialogResult.Yes) return;
+
+            try
+            {
+                await EmailService.EnviarAsync(dados.Email, alunoNome, assunto, mensagem);
+
+                await SalvarLogEnvioAsync(
+                    alunoNome, dados.TelAluno ?? "", dados.TelResp ?? "",
+                    dados.Email, mensagem, "[E-mail: OK]", "Sucesso");
+
+                MessageBox.Show("✅ E-mail enviado com sucesso!", "Resultado",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                await SalvarLogEnvioAsync(
+                    alunoNome, dados.TelAluno ?? "", dados.TelResp ?? "",
+                    dados.Email, mensagem, "[E-mail: Falhou]", ex.Message);
+
+                MessageBox.Show($"❌ Erro ao enviar e-mail: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ══════════════════════════════════════════════
+        //  MONTAR MENSAGEM (template ou padrão)
+        // ══════════════════════════════════════════════
+
+        private async Task<string> MontarMensagemAsync(int agendamentoId, string alunoNome, string status)
+        {
+            try
+            {
+                var previews = await NotificacaoService.GerarPreviewAsync(agendamentoId, status);
+                var preview = previews.FirstOrDefault(p =>
+                    string.Equals(p.Canal, "WHATSAPP", StringComparison.OrdinalIgnoreCase))
+                    ?? previews.FirstOrDefault();
+
+                if (preview != null && !string.IsNullOrWhiteSpace(preview.Mensagem))
+                    return preview.Mensagem;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[MontarMensagem] Erro ao buscar template: {ex}");
+            }
+
+            string dataHora = dgvAgendamentos.CurrentRow?.Cells["DataHora"]?.Value?.ToString() ?? "";
+            string tipo = dgvAgendamentos.CurrentRow?.Cells["Tipo"]?.Value?.ToString() ?? "";
+            string local = dgvAgendamentos.CurrentRow?.Cells["Local"]?.Value?.ToString() ?? "";
+
+            if (DateTime.TryParse(dataHora, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dtFmt))
+                dataHora = dtFmt.ToString("dd/MM/yyyy HH:mm");
+
+            return $"Olá *{alunoNome}*!\n\n"
+                 + $"Informamos sobre o seu agendamento de *{tipo}*:\n"
+                 + $"Data/Hora: {dataHora}\n"
+                 + (string.IsNullOrWhiteSpace(local) ? "" : $"Local: {local}\n")
+                 + $"Status: *{status}*\n\n"
+                 + "Dúvidas? Responda esta mensagem.";
+        }
+
+        // ══════════════════════════════════════════════
+        //  BUSCAR DADOS DO ALUNO (telefone, e-mail)
+        // ══════════════════════════════════════════════
+
+        private record DadosAlunoEnvio(string TelAluno, string TelResp, string Email);
+
+        private static async Task<DadosAlunoEnvio?> BuscarDadosAlunoDoAgendamentoAsync(int agendamentoId)
+        {
+            try
+            {
+                const string sql = @"
+                    SELECT a.numero_aluno, a.numero_responsavel, a.email
+                    FROM agendamentos ag
+                    INNER JOIN alunos a ON a.id = ag.aluno_id
+                    WHERE ag.id = @id
+                    LIMIT 1;";
+
+                var dt = await Db.QueryDataTableAsync(sql, new[] { Db.P("@id", agendamentoId) });
+
+                if (dt.Rows.Count > 0)
+                {
+                    var row = dt.Rows[0];
+                    return new DadosAlunoEnvio(
+                        TelAluno: row["numero_aluno"]?.ToString() ?? "",
+                        TelResp: row["numero_responsavel"]?.ToString() ?? "",
+                        Email: row["email"]?.ToString() ?? "");
+                }
+            }
+            catch { }
+            return null;
+        }
+
+        // ══════════════════════════════════════════════
+        //  SALVAR LOG DE ENVIO (mesma tabela do FrmChatBot)
+        // ══════════════════════════════════════════════
+
+        private static async Task SalvarLogEnvioAsync(
+            string nome, string telAlu, string telRes,
+            string email, string msg, string status, string erro = "")
+        {
+            try
+            {
+                const string sql = @"
+                    INSERT INTO historico_envio_chatbot 
+                        (nome_aluno, numero_aluno, numero_responsavel, email, mensagem, status, erro, operador, operador_id)
+                    VALUES 
+                        (@nome, @telAlu, @telRes, @email, @msg, @status, @erro, @operador, @operadorId)";
+
+                await Db.ExecuteNonQueryAsync(sql, new[]
+                {
+                    Db.P("@nome",       nome ?? ""),
+                    Db.P("@telAlu",     telAlu ?? ""),
+                    Db.P("@telRes",     telRes ?? ""),
+                    Db.P("@email",      email ?? ""),
+                    Db.P("@msg",        msg ?? ""),
+                    Db.P("@status",     status ?? ""),
+                    Db.P("@erro",       string.IsNullOrWhiteSpace(erro) ? "Sucesso" : erro),
+                    Db.P("@operador",   Sessao.UsuarioNome),
+                    Db.P("@operadorId", Sessao.UsuarioId)
+                });
+            }
+            catch { }
+        }
+
+        // ══════════════════════════════════════════════
+        //  EXCLUIR
+        // ══════════════════════════════════════════════
+
+        private async void btnExcluir_Click(object? sender, EventArgs e)
+        {
+            if (dgvAgendamentos.CurrentRow == null)
+            {
+                MessageBox.Show("Selecione um agendamento.", "Atenção",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var idObj = dgvAgendamentos.CurrentRow.Cells["Id"]?.Value;
+            if (idObj == null || !int.TryParse(idObj.ToString(), out int id) || id <= 0)
+            {
+                MessageBox.Show("Não foi possível identificar o registro.", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string aluno = dgvAgendamentos.CurrentRow.Cells["Aluno"]?.Value?.ToString() ?? "";
+
+            var resp = MessageBox.Show(
+                $"Excluir o agendamento {(string.IsNullOrWhiteSpace(aluno) ? "" : $"de '{aluno}'")}?",
+                "Confirmar exclusão",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (resp != DialogResult.Yes) return;
+
+            try
+            {
+                using var conn = new SqliteConnection(Db.ConnectionString);
+                await conn.OpenAsync();
+
+                using (var cmdTent = new SqliteCommand(@"
+                    DELETE FROM notificacao_tentativas
+                    WHERE destinatario_id IN (
+                        SELECT nd.id FROM notificacao_destinatarios nd
+                        INNER JOIN notificacoes n ON n.id = nd.notificacao_id
+                        WHERE n.agendamento_id = @id
+                    );", conn))
+                {
+                    cmdTent.Parameters.AddWithValue("@id", id);
+                    await cmdTent.ExecuteNonQueryAsync();
+                }
+
+                using (var cmdDest = new SqliteCommand(@"
+                    DELETE FROM notificacao_destinatarios
+                    WHERE notificacao_id IN (
+                        SELECT id FROM notificacoes WHERE agendamento_id = @id
+                    );", conn))
+                {
+                    cmdDest.Parameters.AddWithValue("@id", id);
+                    await cmdDest.ExecuteNonQueryAsync();
+                }
+
+                using (var cmdNotif = new SqliteCommand(
+                    "DELETE FROM notificacoes WHERE agendamento_id = @id;", conn))
+                {
+                    cmdNotif.Parameters.AddWithValue("@id", id);
+                    await cmdNotif.ExecuteNonQueryAsync();
+                }
+
+                using var cmd = new SqliteCommand(
+                    "DELETE FROM agendamentos WHERE id = @id;", conn);
+                cmd.Parameters.AddWithValue("@id", id);
+                await cmd.ExecuteNonQueryAsync();
+
+                MessageBox.Show("Agendamento excluído!", "OK",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                LimparFormulario();
+                await AtualizarGridAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao excluir: {ex.Message}", "Erro",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ══════════════════════════════════════════════
+        //  LIMPAR FORMULÁRIO
+        // ══════════════════════════════════════════════
+
+        private void LimparFormulario()
+        {
+            _idEmEdicao = 0;
+            cmbAluno.Text = "";
+            cmbAluno.SelectedIndex = -1;
+            dtpDataHora.Value = DateTime.Now;
+            cmbTipo.SelectedIndex = 0;
+            txtLocal.Text = "";
+            txtObservacao.Text = "";
+
+            lblStatus.Visible = false;
+            cmbStatus.Visible = false;
+
+            Text = "Agendamento";
+        }
+
+        // ══════════════════════════════════════════════
+        //  FORMATAÇÃO DO GRID
+        // ══════════════════════════════════════════════
+
+        private void FormatarGrid()
+        {
+            var g = dgvAgendamentos;
+            if (g.Columns.Count == 0) return;
+
+            g.AllowUserToAddRows = false;
+            g.AllowUserToDeleteRows = false;
+            g.AllowUserToResizeRows = false;
+            g.ReadOnly = true;
+            g.MultiSelect = false;
+            g.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            g.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            g.RowHeadersVisible = false;
+
+            g.EnableHeadersVisualStyles = false;
+            g.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            g.ColumnHeadersHeight = 32;
+
+            g.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+            g.DefaultCellStyle.Font = new Font("Century Gothic", 10F);
+            g.ColumnHeadersDefaultCellStyle.Font = new Font("Century Gothic", 9F, FontStyle.Bold);
+
+            if (g.Columns.Contains("Id"))
+                g.Columns["Id"].Visible = false;
+
+            AjustarColuna(g, "Aluno", "Aluno", 200, DataGridViewContentAlignment.MiddleLeft);
+            AjustarColuna(g, "DataHora", "Data / Hora", 150, DataGridViewContentAlignment.MiddleCenter);
+            AjustarColuna(g, "Tipo", "Tipo", 100, DataGridViewContentAlignment.MiddleCenter);
+            AjustarColuna(g, "Local", "Local", 150, DataGridViewContentAlignment.MiddleLeft);
+            AjustarColuna(g, "Observacao", "Observação", 200, DataGridViewContentAlignment.MiddleLeft);
+            AjustarColuna(g, "Status", "Status", 110, DataGridViewContentAlignment.MiddleCenter);
+            AjustarColuna(g, "CriadoEm", "Criado em", 130, DataGridViewContentAlignment.MiddleCenter);
+
+            if (g.Columns.Contains("Observacao"))
+            {
+                g.Columns["Observacao"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+                g.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
+            }
+
+            g.CellFormatting -= DgvAgendamentos_CellFormatting;
+            g.CellFormatting += DgvAgendamentos_CellFormatting;
+        }
+
+        private void DgvAgendamentos_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (sender is not DataGridView g) return;
+            if (e.ColumnIndex < 0 || e.ColumnIndex >= g.Columns.Count) return;
+
+            string col = g.Columns[e.ColumnIndex].Name;
+
+            if (col is "DataHora" or "CriadoEm")
+            {
+                if (e.Value != null && e.Value != DBNull.Value)
+                {
+                    string s = e.Value.ToString() ?? "";
+                    if (DateTime.TryParse(s, CultureInfo.InvariantCulture, DateTimeStyles.None, out var dt))
+                    {
+                        e.Value = dt.ToString("dd/MM/yyyy HH:mm");
+                        e.FormattingApplied = true;
+                    }
+                }
+            }
+
+            if (col == "Status" && e.Value != null)
+            {
+                string status = e.Value.ToString()?.Trim().ToUpper() ?? "";
+                var row = g.Rows[e.RowIndex];
+
+                row.DefaultCellStyle.ForeColor = status switch
+                {
+                    "PENDENTE" => Color.DarkOrange,
+                    "CONFIRMADO" => Color.DarkGreen,
+                    "CANCELADO" => Color.Red,
+                    "REMARCADO" => Color.DodgerBlue,
+                    "CONCLUIDO" => Color.Gray,
+                    _ => Color.Black,
+                };
+            }
+        }
+
+        private static void AjustarColuna(DataGridView g, string nome, string header, int minWidth, DataGridViewContentAlignment align)
+        {
+            if (!g.Columns.Contains(nome)) return;
+            var c = g.Columns[nome];
+            c.HeaderText = header;
+            c.MinimumWidth = minWidth;
+            c.DefaultCellStyle.Alignment = align;
+        }
+
+        // ══════════════════════════════════════════════
+        //  ABRIR TELA DE TEMPLATES
+        // ══════════════════════════════════════════════
+
+        private void AbrirTemplates()
+        {
+            using var frm = new FrmTemplates();
+            frm.ShowDialog();
+        }
+
+        private void ptbAbrirTemplates_Click(object sender, EventArgs e)
+        {
+            using var frm = new FrmTemplates();
+            frm.ShowDialog();
+        }
+
+        /// <summary>
+        /// Remove caracteres não numéricos e normaliza números para comparação.
+        /// Ex: "(11) 99999-9999" ou "11999999999" → "11999999999"
+        /// </summary>
+        private static string? NormalizarNumero(string? numero)
+        {
+            if (string.IsNullOrWhiteSpace(numero) || numero == "Sem número" || numero == "Não cadastrado")
+                return null;
+
+            string somenteDigitos = new string(numero.Where(char.IsDigit).ToArray());
+
+            if (somenteDigitos.Length == 0)
+                return null;
+
+            // Remove DDI 55 se presente (para comparar apenas DDD+Número)
+            if (somenteDigitos.Length == 13 && somenteDigitos.StartsWith("55"))
+                somenteDigitos = somenteDigitos[2..];
+
+            return somenteDigitos;
+        }
+    }
+}

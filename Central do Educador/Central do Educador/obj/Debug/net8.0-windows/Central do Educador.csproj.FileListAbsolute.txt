@@ -1,0 +1,542 @@
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.exe
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.deps.json
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.runtimeconfig.json
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.pdb
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Aluno.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.CT.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Principal.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.GenerateResource.cache
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.AssemblyInfoInputs.cache
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.AssemblyInfo.cs
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.CoreCompileInputs.cache
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\refint\Central do Educador.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.pdb
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.genruntimeconfig.cache
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\ref\Central do Educador.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.AssemblyReference.cache
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Properties.Resources.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Google.Protobuf.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Compression.LZ4.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Compression.LZ4.Streams.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Hash.xxHash.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\MySql.Data.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\MySqlConnector.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\ZstdSharp.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\comerr64.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\gssapi64.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\k5sprt64.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\C#\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central .88D2B7AF.Up2Date
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.AssemblyReference.cache
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Properties.Resources.resources
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.GenerateResource.cache
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.GeneratedMSBuildEditorConfig.editorconfig
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.AssemblyInfoInputs.cache
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.AssemblyInfo.cs
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.CoreCompileInputs.cache
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.dll
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\refint\Central do Educador.dll
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.pdb
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.exe
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.deps.json
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.runtimeconfig.json
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.pdb
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Google.Protobuf.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Compression.LZ4.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Compression.LZ4.Streams.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Hash.xxHash.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\MySql.Data.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\MySqlConnector.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\ZstdSharp.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\comerr64.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\gssapi64.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\k5sprt64.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central .88D2B7AF.Up2Date
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.genruntimeconfig.cache
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\ref\Central do Educador.dll
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmControleTaxa.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.AssemblyReference.cache
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmControleTaxa.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Properties.Resources.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.GenerateResource.cache
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.AssemblyInfoInputs.cache
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.AssemblyInfo.cs
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.CoreCompileInputs.cache
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\refint\Central do Educador.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.pdb
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.AssemblyReference.cache
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmControleTaxa.resources
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Properties.Resources.resources
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.GenerateResource.cache
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.AssemblyInfoInputs.cache
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.AssemblyInfo.cs
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.CoreCompileInputs.cache
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\refint\Central do Educador.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.pdb
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.exe
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.deps.json
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.runtimeconfig.json
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.pdb
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Google.Protobuf.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Compression.LZ4.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Compression.LZ4.Streams.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Hash.xxHash.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\MySql.Data.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\MySqlConnector.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Configuration.ConfigurationManager.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Data.OleDb.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Diagnostics.EventLog.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Diagnostics.PerformanceCounter.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Security.Cryptography.ProtectedData.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Threading.AccessControl.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\ZstdSharp.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\comerr64.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\gssapi64.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\k5sprt64.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Data.OleDb.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Threading.AccessControl.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central .88D2B7AF.Up2Date
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.genruntimeconfig.cache
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\ref\Central do Educador.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmAluno.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.exe
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.deps.json
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.runtimeconfig.json
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.pdb
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Google.Protobuf.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Compression.LZ4.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Compression.LZ4.Streams.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Hash.xxHash.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\MySql.Data.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\MySqlConnector.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Configuration.ConfigurationManager.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Data.OleDb.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Diagnostics.EventLog.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Diagnostics.PerformanceCounter.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Security.Cryptography.ProtectedData.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Threading.AccessControl.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\ZstdSharp.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\comerr64.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\gssapi64.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\k5sprt64.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Data.OleDb.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.PerformanceCounter.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Threading.AccessControl.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmAluno.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central .88D2B7AF.Up2Date
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.genruntimeconfig.cache
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\ref\Central do Educador.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Forms.FrmLogin.resources
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmPrincipal.resources
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Forms.FrmUsuarios.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Forms.FrmLogin.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmPrincipal.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Forms.FrmUsuarios.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Black.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-BlackItalic.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Bold.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-BoldItalic.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraBold.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraBoldItalic.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraLight.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraLightItalic.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Italic.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Light.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-LightItalic.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Medium.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-MediumItalic.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Regular.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-SemiBold.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-SemiBoldItalic.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Thin.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ThinItalic.ttf
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\OFL.txt
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\QuestPDF.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libQuestPdfSkia.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libqpdf.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libQuestPdfSkia.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libqpdf.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libQuestPdfSkia.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libqpdf.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libQuestPdfSkia.dylib
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libqpdf.dylib
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libQuestPdfSkia.dylib
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libqpdf.dylib
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\QuestPdfSkia.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\libgcc_s_seh-1.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\libstdc++-6.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\libwinpthread-1.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\qpdf.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\zlib1.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\QuestPdfSkia.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\libgcc_s_dw2-1.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\libstdc++-6.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\libwinpthread-1.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\qpdf.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\zlib1.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Black.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-BlackItalic.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Bold.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-BoldItalic.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraBold.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraBoldItalic.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraLight.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraLightItalic.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Italic.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Light.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-LightItalic.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Medium.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-MediumItalic.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Regular.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-SemiBold.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-SemiBoldItalic.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Thin.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ThinItalic.ttf
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\OFL.txt
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\QuestPDF.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libQuestPdfSkia.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libqpdf.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libQuestPdfSkia.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libqpdf.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libQuestPdfSkia.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libqpdf.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libQuestPdfSkia.dylib
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libqpdf.dylib
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libQuestPdfSkia.dylib
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libqpdf.dylib
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\QuestPdfSkia.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\libgcc_s_seh-1.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\libstdc++-6.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\libwinpthread-1.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\qpdf.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\zlib1.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\QuestPdfSkia.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\libgcc_s_dw2-1.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\libstdc++-6.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\libwinpthread-1.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\qpdf.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\zlib1.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmEntregaLivros.resources
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmEntregaLivros.resources
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Data.Sqlite.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SQLitePCLRaw.batteries_v2.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SQLitePCLRaw.core.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SQLitePCLRaw.provider.e_sqlite3.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\browser-wasm\nativeassets\net8.0\e_sqlite3.a
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-armel\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-mips64\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-arm\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-arm64\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-riscv64\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-s390x\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-ppc64le\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-riscv64\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-s390x\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x86\native\libe_sqlite3.so
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\maccatalyst-arm64\native\libe_sqlite3.dylib
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\maccatalyst-x64\native\libe_sqlite3.dylib
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libe_sqlite3.dylib
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libe_sqlite3.dylib
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-arm\native\e_sqlite3.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-arm64\native\e_sqlite3.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\e_sqlite3.dll
+C:\Users\micro\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\e_sqlite3.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Black.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-BlackItalic.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Bold.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-BoldItalic.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraBold.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraBoldItalic.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraLight.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraLightItalic.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Italic.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Light.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-LightItalic.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Medium.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-MediumItalic.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Regular.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-SemiBold.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-SemiBoldItalic.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Thin.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ThinItalic.ttf
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\OFL.txt
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Data.Sqlite.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\QuestPDF.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SQLitePCLRaw.batteries_v2.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SQLitePCLRaw.core.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SQLitePCLRaw.provider.e_sqlite3.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Configuration.ConfigurationManager.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Data.OleDb.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Diagnostics.EventLog.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Diagnostics.PerformanceCounter.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Security.Cryptography.ProtectedData.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Threading.AccessControl.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libQuestPdfSkia.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libqpdf.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libQuestPdfSkia.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libqpdf.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libQuestPdfSkia.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libqpdf.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libQuestPdfSkia.dylib
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libqpdf.dylib
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libQuestPdfSkia.dylib
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libqpdf.dylib
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\QuestPdfSkia.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\libgcc_s_seh-1.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\libstdc++-6.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\libwinpthread-1.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\qpdf.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\zlib1.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\QuestPdfSkia.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\libgcc_s_dw2-1.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\libstdc++-6.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\libwinpthread-1.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\qpdf.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\zlib1.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\browser-wasm\nativeassets\net8.0\e_sqlite3.a
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-armel\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-mips64\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-arm\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-arm64\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-riscv64\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-s390x\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-ppc64le\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-riscv64\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-s390x\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x86\native\libe_sqlite3.so
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\maccatalyst-arm64\native\libe_sqlite3.dylib
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\maccatalyst-x64\native\libe_sqlite3.dylib
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libe_sqlite3.dylib
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libe_sqlite3.dylib
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-arm\native\e_sqlite3.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-arm64\native\e_sqlite3.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\e_sqlite3.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\e_sqlite3.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Data.OleDb.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.PerformanceCounter.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Threading.AccessControl.dll
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmAluno.resources
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmEntregaLivros.resources
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Forms.FrmLogin.resources
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmPrincipal.resources
+C:\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Forms.FrmUsuarios.resources
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Data.Sqlite.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SQLitePCLRaw.batteries_v2.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SQLitePCLRaw.core.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SQLitePCLRaw.provider.e_sqlite3.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\browser-wasm\nativeassets\net8.0\e_sqlite3.a
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-armel\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-mips64\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-arm\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-arm64\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-riscv64\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-s390x\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-ppc64le\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-riscv64\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-s390x\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x86\native\libe_sqlite3.so
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\maccatalyst-arm64\native\libe_sqlite3.dylib
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\maccatalyst-x64\native\libe_sqlite3.dylib
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libe_sqlite3.dylib
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libe_sqlite3.dylib
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-arm\native\e_sqlite3.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-arm64\native\e_sqlite3.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\e_sqlite3.dll
+C:\Users\kenne\OneDrive - INVOKE Microsoft Partner\Kennedy\Programação\CSharp\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\e_sqlite3.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\ExcelDataReader.dll
+C:\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\ExcelDataReader.DataSet.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Black.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-BlackItalic.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Bold.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-BoldItalic.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraBold.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraBoldItalic.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraLight.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ExtraLightItalic.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Italic.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Light.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-LightItalic.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Medium.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-MediumItalic.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Regular.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-SemiBold.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-SemiBoldItalic.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-Thin.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\Lato-ThinItalic.ttf
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\LatoFont\OFL.txt
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.exe
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.deps.json
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.runtimeconfig.json
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Central do Educador.pdb
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\ClosedXML.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\ClosedXML.Parser.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\DocumentFormat.OpenXml.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\DocumentFormat.OpenXml.Framework.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\ExcelDataReader.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\ExcelDataReader.DataSet.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\ExcelNumberFormat.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Google.Protobuf.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Compression.LZ4.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Compression.LZ4.Streams.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\K4os.Hash.xxHash.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Data.Sqlite.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\MySql.Data.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\MySqlConnector.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\QRCoder.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\QuestPDF.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\RBush.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\WebDriver.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SixLabors.Fonts.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SQLitePCLRaw.batteries_v2.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SQLitePCLRaw.core.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\SQLitePCLRaw.provider.e_sqlite3.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Configuration.ConfigurationManager.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Data.OleDb.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Data.SQLite.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Diagnostics.EventLog.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Diagnostics.PerformanceCounter.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.IO.Packaging.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Security.Cryptography.ProtectedData.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\System.Threading.AccessControl.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\ZstdSharp.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\comerr64.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\gssapi64.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\k5sprt64.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libQuestPdfSkia.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libqpdf.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libQuestPdfSkia.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libqpdf.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libQuestPdfSkia.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libqpdf.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libQuestPdfSkia.dylib
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libqpdf.dylib
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libQuestPdfSkia.dylib
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libqpdf.dylib
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\QuestPdfSkia.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\libgcc_s_seh-1.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\libstdc++-6.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\libwinpthread-1.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\qpdf.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\zlib1.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\QuestPdfSkia.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\libgcc_s_dw2-1.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\libstdc++-6.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\libwinpthread-1.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\qpdf.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\zlib1.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux\native\selenium-manager
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx\native\selenium-manager
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\native\selenium-manager.exe
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\browser-wasm\nativeassets\net8.0\e_sqlite3.a
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-arm64\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-armel\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-mips64\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-arm\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-arm64\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-riscv64\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-s390x\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-musl-x64\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-ppc64le\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-riscv64\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-s390x\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x64\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\linux-x86\native\libe_sqlite3.so
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\maccatalyst-arm64\native\libe_sqlite3.dylib
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\maccatalyst-x64\native\libe_sqlite3.dylib
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-arm64\native\libe_sqlite3.dylib
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\osx-x64\native\libe_sqlite3.dylib
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-arm\native\e_sqlite3.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-arm64\native\e_sqlite3.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x64\native\e_sqlite3.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win-x86\native\e_sqlite3.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Data.OleDb.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.PerformanceCounter.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Threading.AccessControl.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.AssemblyReference.cache
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\ChatBot.FrmCadastro.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\ChatBot.FrmConfig.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\ChatBot.FrmGerenciarAlunos.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\ChatBot.FrmLogin.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmAluno.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmControleTaxa.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmEntregaLivros.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmHorarioAlunos.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmHorárioAluno.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Forms.FrmLogin.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\ChatBot.FrmPainel.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.FrmPrincipal.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Forms.FrmUsuarios.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central_do_Educador.Properties.Resources.resources
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.GenerateResource.cache
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.GeneratedMSBuildEditorConfig.editorconfig
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.AssemblyInfoInputs.cache
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.AssemblyInfo.cs
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.csproj.CoreCompileInputs.cache
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central .88D2B7AF.Up2Date
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\refint\Central do Educador.dll
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.pdb
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\Central do Educador.genruntimeconfig.cache
+\\SUPORTE\prog\Central do Educador\Central do Educador\obj\Debug\net8.0-windows\ref\Central do Educador.dll
